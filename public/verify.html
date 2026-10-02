@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verifizierung – Astryx</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <h2 class="page-title">Verifizierung</h2>
+    <div class="panel" id="panel">
+      <p>Autorisiere Astryx mit deinem Discord-Account. Folgende Berechtigungen werden angefragt:</p>
+      <ul>
+        <li><span class="tag must">Pflicht</span><b>Profil (identify)</b><br>Name, ID und Profilbild – damit wir dich einloggen können.</li>
+        <li><span class="tag rec">Empfohlen</span><b>Serverliste (guilds)</b><br>Zeigt, auf welchen Servern du bist – nötig für das spätere Dashboard.</li>
+        <li><span class="tag rec">Empfohlen</span><b>Direktnachrichten</b><br>Astryx darf dir Nachrichten senden, z. B. eine Willkommensnachricht.</li>
+      </ul>
+      <label class="check">
+        <input type="checkbox" id="agree">
+        <span>Ich akzeptiere die <a href="/nutzungsbedingungen" target="_blank">Nutzungsbedingungen</a> und habe die <a href="/datenschutz" target="_blank">Datenschutzerklärung</a> gelesen.</span>
+      </label>
+      <div class="center">
+        <button class="btn" id="go" disabled>Mit Discord autorisieren</button>
+      </div>
+    </div>
+  </main>
+  <script src="/app.js"></script>
+  <script>
+    const agree = document.getElementById('agree');
+    const go = document.getElementById('go');
+    agree.addEventListener('change', () => (go.disabled = !agree.checked));
+    go.addEventListener('click', () => (location.href = '/api/verify'));
+
+    fetch('/api/me').then(r => (r.ok ? r.json() : null)).then(d => {
+      if (!d || !d.user) return;
+      const panel = document.getElementById('panel');
+      panel.replaceChildren();
+      const p = document.createElement('p');
+      p.className = 'center';
+      p.textContent = 'Du bist bereits verifiziert. ✔';
+      const wrap = document.createElement('div');
+      wrap.className = 'center';
+      const a = document.createElement('a');
+      a.className = 'btn';
+      a.href = '/';
+      a.textContent = 'Zur Startseite';
+      wrap.append(a);
+      panel.append(p, wrap);
+    });
+  </script>
+</body>
+</html>
