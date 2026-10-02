@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ASTRYX / Verification</title>
+<meta name="theme-color" content="#0c0d0e">
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="page-verify">
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-sweep" aria-hidden="true"></div>
+<div class="ruler" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand"><svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 4 29M16 3l12 26M9 20h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/><circle cx="16" cy="3" r="1.6" fill="var(--signal)"/></svg><span class="wordmark">ASTRYX</span></div>
+  <div class="sysline"><span class="dot"></span>SECURE ACCESS SYSTEM</div>
+</header>
+
+<main class="stage">
+  <section class="terminal" aria-labelledby="t-title">
+    <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+    <div class="scanbar" aria-hidden="true"></div>
+    <div class="t-head"><span>AUTH</span><span id="t-state">STANDBY</span></div>
+    <h1 id="t-title">IDENTITY VERIFICATION</h1>
+    <p class="t-sub">Discord identity required</p>
+    <p class="t-text">To access the Astryx control interface, your Discord identity must be verified.</p>
+    <p class="t-error" id="t-error" role="alert" hidden></p>
+    <a class="verify" id="verify" href="/api/auth/discord">
+      <span class="v-label">VERIFY WITH DISCORD</span>
+      <span class="v-state" id="v-state">READY</span>
+      <i class="v-line"></i>
+    </a>
+    <dl class="t-meta">
+      <div><dt>Method</dt><dd>OAuth2</dd></div>
+      <div><dt>Scope</dt><dd>identify</dd></div>
+      <div><dt>Password</dt><dd>none stored</dd></div>
+    </dl>
+  </section>
+</main>
+
+<footer class="foot"><span>ASTRYX 0.1</span><span id="clock">--:--:-- UTC</span></footer>
+<script src="/js/background.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
