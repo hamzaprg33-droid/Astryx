@@ -27,18 +27,25 @@ body::before {
 }
 body::after {
   content: "";
-  position: fixed; left: -50%; right: -50%; bottom: 0; height: 55%; z-index: -1;
+  position: fixed; left: -100%; right: -100%; bottom: 0; height: 75%; z-index: -1;
+  /* Soft-edged 2px lines instead of hard 1px lines: hard edges alias under perspective and cause flicker/moiré */
   background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  transform: perspective(420px) rotateX(62deg);
+    linear-gradient(to bottom, transparent 0, var(--line) 1px, var(--line) 2px, transparent 3px),
+    linear-gradient(to right, transparent 0, var(--line) 1px, var(--line) 2px, transparent 3px);
+  background-size: 72px 72px;
+  background-position: 50% 0;
+  transform: perspective(520px) rotateX(64deg) translateZ(0);
   transform-origin: 50% 100%;
-  -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 90%);
-  mask-image: linear-gradient(to top, #000 10%, transparent 90%);
-  animation: grid 4s linear infinite;
+  backface-visibility: hidden;
+  will-change: background-position;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.6) 45%, transparent 85%);
+  mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.6) 45%, transparent 85%);
+  animation: grid 6s linear infinite;
 }
-@keyframes grid { to { background-position: 0 64px; } }
+@keyframes grid { to { background-position: 50% 72px; } }
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+}
 
 .topbar {
   position: fixed; top: 0; right: 0; z-index: 10;
