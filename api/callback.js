@@ -1,41 +1,18 @@
-const { createToken, readToken, parseCookies } = require('./_lib/session');
+const { parseCookies, setSessionCookie, clearCookie, buildSession, getSession } = require('./_lib/session');
+const { joinMainGuild, fetchBotGuild, sendDM, sleep } = require('./_lib/discord');
+const { getLang, strings } = require('./_lib/i18n');
 const resultPage = require('./_lib/result-page');
 
-const DAYS = 30;
-const botHeaders = () => ({ Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`, 'Content-Type': 'application/json' });
+const DASHBOARD_URL = 'https://astryx-bot.vercel.app';
+const escapeMarkdown = (s) => String(s).replace(/([*_`~|\\[\]])/g, '\\$1');
 
-// Discord erlaubt Bot-DMs nur an User, die mindestens einen Server mit dem Bot teilen.
-// Bei einem Community-Bot ist das jeder Server, auf dem Astryx installiert ist.
-async function sendWelcomeDM(userId) {
-  try {
-    const ch = await fetch('https://discord.com/api/users/@me/channels', {
-      method: 'POST', headers: botHeaders(), body: JSON.stringify({ recipient_id: userId }),
-    });
-    if (!ch.ok) return;
-    const { id } = await ch.json();
-    await fetch(`https://discord.com/api/channels/${id}/messages`, {
-      method: 'POST', headers: botHeaders(),
-      body: JSON.stringify({
-        embeds: [{
-          title: '✨ Willkommen bei Astryx',
-          description: 'Du bist jetzt verifiziert. Nutze `/help`, um alle Commands zu sehen.',
-          color: 0x00e5ff,
-        }],
-      }),
-    });
-  } catch { /* DMs können in den Privatsphäre-Einstellungen blockiert sein */ }
-}
-
-module.exports = async (req, res) => {
-  const { code, state, error } = req.query;
-  if (error) return resultPage(res, { ok: false, message: 'Autorisierung abgebrochen.', status: 400 });
-
-  const cookies = parseCookies(req);
-  if (!code || !state || state !== cookies.oauth_state) {
-    return resultPage(res, { ok: false, message: 'Ungültige Anfrage. Bitte versuche es erneut.', status: 400 });
+async function handleVerify(req, res, { lang, T, code, state, cookies }) {
+  clearCookie(res, 'oauth_state');
+  if (!code || state !== cookies.oauth_state) {
+    return resultPage(res, { lang, ok: false, messages: [T.invalid], status: 400 });
   }
 
-  const tokenRes = await fetch('https://discord.com/api/oauth2/token', {
+  const tokenRes = await fetch('https://discord.com/api/v10/oauth2/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
@@ -46,27 +23,84 @@ module.exports = async (req, res) => {
       redirect_uri: `${process.env.SITE_URL}/api/callback`,
     }),
   });
-  if (!tokenRes.ok) return resultPage(res, { ok: false, message: 'Verifizierung fehlgeschlagen.', status: 400 });
-  const { access_token } = await tokenRes.json();
+  if (!tokenRes.ok) return resultPage(res, { lang, ok: false, messages: [T.failed], status: 400 });
+  const tokens = await tokenRes.json();
 
-  const user = await (await fetch('https://discord.com/api/users/@me', {
-    headers: { Authorization: `Bearer ${access_token}` },
-  })).json();
+  const userRes = await fetch('https://discord.com/api/v10/users/@me', { headers: { Authorization: `Bearer ${tokens.access_token}` } });
+  if (!userRes.ok) return resultPage(res, { lang, ok: false, messages: [T.failed], status: 400 });
+  const user = await userRes.json();
 
-  // Willkommens-DM nur beim ersten Mal
-  const existing = readToken(cookies.session);
-  if (!existing || existing.exp < Date.now()) await sendWelcomeDM(user.id);
+  const join = await joinMainGuild(user.id, tokens.access_token).catch(() => ({ joined: false }));
+  setSessionCookie(res, buildSession(user, tokens));
 
-  const session = createToken({
-    id: user.id,
-    name: user.global_name || user.username,
-    avatar: user.avatar,
-    exp: Date.now() + DAYS * 24 * 3600 * 1000,
+  const messages = [T.verified];
+  if (join.joined) messages.push(T.joinedMain);
+  else if (join.invite) messages.push(T.joinFallback);
+
+  resultPage(res, {
+    lang,
+    ok: true,
+    messages,
+    link: join.invite ? { href: join.invite, label: T.joinButton } : null,
+    autoClose: !join.invite,
+    next: `/${user.id}/guilds`,
+    data: { userId: user.id },
+  });
+}
+
+async function handleInvite(req, res, { lang, T, state, cookies, queryGuild }) {
+  clearCookie(res, 'invite_state');
+  const guildId = state.split('.')[2];
+  if (state !== cookies.invite_state || (queryGuild && queryGuild !== guildId)) {
+    return resultPage(res, { lang, kind: 'invite', ok: false, messages: [T.invalid], status: 400 });
+  }
+
+  const session = await getSession(req, res);
+  if (!session) return res.redirect(302, '/verify');
+
+  let guild = null;
+  for (let i = 0; i < 4 && !guild; i++) {
+    if (i) await sleep(1200);
+    guild = await fetchBotGuild(guildId);
+  }
+  const next = `/${session.id}/guilds`;
+  if (!guild) return resultPage(res, { lang, kind: 'invite', ok: false, messages: [T.botMissing], next, status: 404 });
+
+  await sendDM(session.id, {
+    title: T.dmTitle,
+    description: T.dmBody(escapeMarkdown(guild.name), DASHBOARD_URL),
+    color: 0x00e5ff,
+    thumbnail: guild.icon ? { url: `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=128` } : undefined,
   });
 
-  res.setHeader('Set-Cookie', [
-    `session=${session}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${DAYS * 24 * 3600}`,
-    'oauth_state=; Path=/; Max-Age=0',
-  ]);
-  resultPage(res, { ok: true, message: 'Du bist jetzt verifiziert.' });
+  resultPage(res, {
+    lang,
+    kind: 'invite',
+    ok: true,
+    title: T.invitedTitle,
+    messages: [T.invited.replace('{guild}', guild.name)],
+    next,
+    data: { guildId },
+  });
+}
+
+module.exports = async (req, res) => {
+  const lang = getLang(req);
+  const T = strings(lang);
+  const { code, state, error, guild_id: queryGuild } = req.query;
+  const cookies = parseCookies(req);
+  const isInvite = typeof state === 'string' && state.startsWith('i.');
+
+  if (error) {
+    clearCookie(res, isInvite ? 'invite_state' : 'oauth_state');
+    return resultPage(res, { lang, kind: isInvite ? 'invite' : 'auth', ok: false, messages: [T.cancelled], status: 400 });
+  }
+  if (typeof state !== 'string') return resultPage(res, { lang, ok: false, messages: [T.invalid], status: 400 });
+
+  try {
+    if (isInvite) return await handleInvite(req, res, { lang, T, state, cookies, queryGuild });
+    return await handleVerify(req, res, { lang, T, code, state, cookies });
+  } catch {
+    return resultPage(res, { lang, kind: isInvite ? 'invite' : 'auth', ok: false, messages: [T.failed], status: 500 });
+  }
 };

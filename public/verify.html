@@ -3,64 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Verifizierung – Astryx</title>
+  <title data-i18n="verify.pageTitle">Verifizierung – Astryx</title>
+  <meta name="theme-color" content="#04050d">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <main>
-    <h2 class="page-title">Verifizierung</h2>
+    <h2 class="page-title" data-i18n="verify.title"></h2>
     <div class="panel" id="panel">
-      <p>Autorisiere Astryx mit deinem Discord-Account. Folgende Berechtigungen werden angefragt:</p>
+      <p data-i18n="verify.intro"></p>
       <ul>
-        <li><span class="tag must">Pflicht</span><b>Profil (identify)</b><br>Name, ID und Profilbild – damit wir dich einloggen können.</li>
-        <li><span class="tag rec">Empfohlen</span><b>Serverliste (guilds)</b><br>Zeigt, auf welchen Servern du bist – nötig für das spätere Dashboard.</li>
-        <li><span class="tag rec">Empfohlen</span><b>Server beitreten &amp; Direktnachrichten</b><br>Du wirst dem Astryx-Server hinzugefügt, damit der Bot dir Nachrichten senden kann, z. B. eine Willkommensnachricht.</li>
+        <li><span class="tag must" data-i18n="verify.required"></span><b data-i18n="verify.identify"></b><br><span data-i18n="verify.identifyDesc"></span></li>
+        <li><span class="tag must" data-i18n="verify.required"></span><b data-i18n="verify.guilds"></b><br><span data-i18n="verify.guildsDesc"></span></li>
+        <li><span class="tag rec" data-i18n="verify.recommended"></span><b data-i18n="verify.join"></b><br><span data-i18n="verify.joinDesc"></span></li>
       </ul>
       <label class="check">
         <input type="checkbox" id="agree">
-        <span>Ich akzeptiere die <a href="/nutzungsbedingungen" target="_blank">Nutzungsbedingungen</a> und habe die <a href="/datenschutz" target="_blank">Datenschutzerklärung</a> gelesen.</span>
+        <span data-i18n-html="verify.agree"></span>
       </label>
       <div class="center">
-        <button class="btn" id="go" disabled>Mit Discord autorisieren</button>
+        <button class="btn" id="go" disabled data-i18n="verify.button"></button>
       </div>
     </div>
   </main>
   <script src="/app.js"></script>
   <script>
+    const { t, me, make } = Astryx;
     const agree = document.getElementById('agree');
     const go = document.getElementById('go');
     agree.addEventListener('change', () => (go.disabled = !agree.checked));
     go.addEventListener('click', () => {
       const tab = window.open('/api/verify', '_blank');
       if (!tab) location.href = '/api/verify';
-      else go.textContent = 'Warte auf Discord …';
+      else go.textContent = t('verify.waiting');
     });
 
     let handled = false;
     const onAuth = (data) => {
       if (handled || !data || data.type !== 'astryx-auth') return;
-      if (!data.ok) { go.textContent = 'Mit Discord autorisieren'; return; }
+      if (!data.ok) { go.textContent = t('verify.button'); return; }
       handled = true;
-      location.href = '/';
+      location.href = `/${data.userId}/guilds`;
     };
     try { new BroadcastChannel('astryx-auth').onmessage = (e) => onAuth(e.data); } catch {}
     window.addEventListener('message', (e) => { if (e.origin === location.origin) onAuth(e.data); });
 
-    fetch('/api/me').then(r => (r.ok ? r.json() : null)).then(d => {
-      if (!d || !d.user) return;
-      const panel = document.getElementById('panel');
-      panel.replaceChildren();
-      const p = document.createElement('p');
-      p.className = 'center';
-      p.textContent = 'Du bist bereits verifiziert. ✔';
-      const wrap = document.createElement('div');
-      wrap.className = 'center';
-      const a = document.createElement('a');
-      a.className = 'btn';
-      a.href = '/';
-      a.textContent = 'Zur Startseite';
-      wrap.append(a);
-      panel.append(p, wrap);
+    me.then(u => {
+      if (!u) return;
+      document.getElementById('panel').replaceChildren(
+        make('p', { className: 'center', textContent: t('verify.already') }),
+        make('div', { className: 'center' }, make('a', { className: 'btn', href: `/${u.id}/guilds`, textContent: t('home.ctaServers') }))
+      );
     });
   </script>
 </body>

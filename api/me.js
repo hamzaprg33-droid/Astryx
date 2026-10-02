@@ -1,7 +1,8 @@
-const { readToken, parseCookies } = require('./_lib/session');
+const { getSession } = require('./_lib/session');
 
-module.exports = (req, res) => {
-  const s = readToken(parseCookies(req).session);
-  if (!s || s.exp < Date.now()) return res.status(401).json({ user: null });
+module.exports = async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  const s = await getSession(req, res);
+  if (!s) return res.status(401).json({ user: null });
   res.json({ user: { id: s.id, name: s.name, avatar: s.avatar } });
 };

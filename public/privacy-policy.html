@@ -20,16 +20,18 @@
     <h2>3. Login und Verifizierung über Discord</h2>
     <p>Wenn du dich verifizierst, wirst du zu Discord Inc. (USA) weitergeleitet und autorisierst Astryx. Wir erhalten dabei:</p>
     <ul>
-      <li>Discord-ID, Anzeigename und Profilbild (Pflicht)</li>
-      <li>Liste deiner Server (Empfohlen; wird aktuell nicht gespeichert)</li>
+      <li>Discord-ID, Anzeigename und Profilbild (identify)</li>
+      <li>Liste deiner Server inklusive deiner Berechtigungen (guilds). Damit zeigen wir dir im Dashboard die Server an, auf denen du Inhaber oder Administrator bist. Die Liste wird nicht dauerhaft gespeichert.</li>
+      <li>Die Berechtigung, dich einem Server hinzuzufügen (guilds.join). Damit wirst du bei der Verifizierung automatisch dem offiziellen Astryx-Server hinzugefügt.</li>
     </ul>
-    <p>Zusätzlich kann der Bot dir eine Willkommens-Direktnachricht senden. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Bereitstellung der Funktion) bzw. deine Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Es gilt zusätzlich die Datenschutzerklärung von Discord.</p>
+    <p>Wenn du Astryx auf einen deiner Server einlädst, sendet dir der Bot einmalig eine Direktnachricht mit Informationen zum Dashboard. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Bereitstellung der Funktion) bzw. deine Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Es gilt zusätzlich die Datenschutzerklärung von Discord.</p>
 
     <h2>4. Cookies</h2>
     <p>Wir setzen ausschließlich technisch notwendige Cookies:</p>
     <ul>
-      <li><b>session</b> (30 Tage): signierter Login mit Discord-ID, Name und Avatar-Kennung, damit du angemeldet bleibst.</li>
-      <li><b>oauth_state</b> (10 Minuten): Sicherheitswert gegen Missbrauch des Logins.</li>
+      <li><b>session</b> (30 Tage): verschlüsselter Login mit Discord-ID, Name, Avatar-Kennung und den Discord-Zugriffstoken, damit du angemeldet bleibst und deine Server geladen werden können.</li>
+      <li><b>oauth_state</b> und <b>invite_state</b> (je 10 Minuten): Sicherheitswerte gegen Missbrauch der Anmeldung bzw. der Bot-Einladung.</li>
+      <li><b>lang</b> (1 Jahr): deine gewählte Sprache (Deutsch oder Englisch).</li>
     </ul>
     <p>Rechtsgrundlage: § 25 Abs. 2 Nr. 2 TDDDG sowie Art. 6 Abs. 1 lit. f DSGVO. Mit „Logout“ wird das Cookie gelöscht.</p>
 
