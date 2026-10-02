@@ -1,17 +1,32 @@
 const { createToken, readToken, parseCookies } = require('./_lib/session');
+const resultPage = require('./_lib/result-page');
 
 const DAYS = 30;
+const botHeaders = () => ({ Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`, 'Content-Type': 'application/json' });
+
+// Ein Bot kann nur Usern schreiben, mit denen er einen Server teilt.
+// Deshalb wird der User (Scope guilds.join) dem Astryx-Server hinzugefügt.
+async function joinGuild(userId, accessToken) {
+  const guildId = process.env.DISCORD_GUILD_ID;
+  if (!guildId) return;
+  try {
+    await fetch(`https://discord.com/api/guilds/${guildId}/members/${userId}`, {
+      method: 'PUT',
+      headers: botHeaders(),
+      body: JSON.stringify({ access_token: accessToken }),
+    });
+  } catch { /* User ist evtl. schon Mitglied oder gebannt */ }
+}
 
 async function sendWelcomeDM(userId) {
   try {
-    const headers = { Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`, 'Content-Type': 'application/json' };
     const ch = await fetch('https://discord.com/api/users/@me/channels', {
-      method: 'POST', headers, body: JSON.stringify({ recipient_id: userId }),
+      method: 'POST', headers: botHeaders(), body: JSON.stringify({ recipient_id: userId }),
     });
     if (!ch.ok) return;
     const { id } = await ch.json();
     await fetch(`https://discord.com/api/channels/${id}/messages`, {
-      method: 'POST', headers,
+      method: 'POST', headers: botHeaders(),
       body: JSON.stringify({
         embeds: [{
           title: '✨ Willkommen bei Astryx',
@@ -20,13 +35,17 @@ async function sendWelcomeDM(userId) {
         }],
       }),
     });
-  } catch { /* DMs können blockiert sein – kein Problem */ }
+  } catch { /* DMs können in den Privatsphäre-Einstellungen blockiert sein */ }
 }
 
 module.exports = async (req, res) => {
-  const { code, state } = req.query;
+  const { code, state, error } = req.query;
+  if (error) return resultPage(res, { ok: false, message: 'Autorisierung abgebrochen.', status: 400 });
+
   const cookies = parseCookies(req);
-  if (!code || !state || state !== cookies.oauth_state) return res.status(400).send('Ungültige Anfrage.');
+  if (!code || !state || state !== cookies.oauth_state) {
+    return resultPage(res, { ok: false, message: 'Ungültige Anfrage. Bitte versuche es erneut.', status: 400 });
+  }
 
   const tokenRes = await fetch('https://discord.com/api/oauth2/token', {
     method: 'POST',
@@ -39,12 +58,14 @@ module.exports = async (req, res) => {
       redirect_uri: `${process.env.SITE_URL}/api/callback`,
     }),
   });
-  if (!tokenRes.ok) return res.status(400).send('Verifizierung fehlgeschlagen.');
+  if (!tokenRes.ok) return resultPage(res, { ok: false, message: 'Verifizierung fehlgeschlagen.', status: 400 });
   const { access_token } = await tokenRes.json();
 
   const user = await (await fetch('https://discord.com/api/users/@me', {
     headers: { Authorization: `Bearer ${access_token}` },
   })).json();
+
+  await joinGuild(user.id, access_token);
 
   // Willkommens-DM nur beim ersten Mal
   const existing = readToken(cookies.session);
@@ -61,5 +82,5 @@ module.exports = async (req, res) => {
     `session=${session}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${DAYS * 24 * 3600}`,
     'oauth_state=; Path=/; Max-Age=0',
   ]);
-  res.redirect(302, '/');
+  resultPage(res, { ok: true, message: 'Du bist jetzt verifiziert.' });
 };

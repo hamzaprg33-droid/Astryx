@@ -14,7 +14,7 @@
       <ul>
         <li><span class="tag must">Pflicht</span><b>Profil (identify)</b><br>Name, ID und Profilbild – damit wir dich einloggen können.</li>
         <li><span class="tag rec">Empfohlen</span><b>Serverliste (guilds)</b><br>Zeigt, auf welchen Servern du bist – nötig für das spätere Dashboard.</li>
-        <li><span class="tag rec">Empfohlen</span><b>Direktnachrichten</b><br>Astryx darf dir Nachrichten senden, z. B. eine Willkommensnachricht.</li>
+        <li><span class="tag rec">Empfohlen</span><b>Server beitreten &amp; Direktnachrichten</b><br>Du wirst dem Astryx-Server hinzugefügt, damit der Bot dir Nachrichten senden kann, z. B. eine Willkommensnachricht.</li>
       </ul>
       <label class="check">
         <input type="checkbox" id="agree">
@@ -30,7 +30,21 @@
     const agree = document.getElementById('agree');
     const go = document.getElementById('go');
     agree.addEventListener('change', () => (go.disabled = !agree.checked));
-    go.addEventListener('click', () => (location.href = '/api/verify'));
+    go.addEventListener('click', () => {
+      const tab = window.open('/api/verify', '_blank');
+      if (!tab) location.href = '/api/verify';
+      else go.textContent = 'Warte auf Discord …';
+    });
+
+    let handled = false;
+    const onAuth = (data) => {
+      if (handled || !data || data.type !== 'astryx-auth') return;
+      if (!data.ok) { go.textContent = 'Mit Discord autorisieren'; return; }
+      handled = true;
+      location.href = '/';
+    };
+    try { new BroadcastChannel('astryx-auth').onmessage = (e) => onAuth(e.data); } catch {}
+    window.addEventListener('message', (e) => { if (e.origin === location.origin) onAuth(e.data); });
 
     fetch('/api/me').then(r => (r.ok ? r.json() : null)).then(d => {
       if (!d || !d.user) return;
