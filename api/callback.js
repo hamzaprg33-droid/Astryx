@@ -4,20 +4,8 @@ const resultPage = require('./_lib/result-page');
 const DAYS = 30;
 const botHeaders = () => ({ Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`, 'Content-Type': 'application/json' });
 
-// Ein Bot kann nur Usern schreiben, mit denen er einen Server teilt.
-// Deshalb wird der User (Scope guilds.join) dem Astryx-Server hinzugefügt.
-async function joinGuild(userId, accessToken) {
-  const guildId = process.env.DISCORD_GUILD_ID;
-  if (!guildId) return;
-  try {
-    await fetch(`https://discord.com/api/guilds/${guildId}/members/${userId}`, {
-      method: 'PUT',
-      headers: botHeaders(),
-      body: JSON.stringify({ access_token: accessToken }),
-    });
-  } catch { /* User ist evtl. schon Mitglied oder gebannt */ }
-}
-
+// Discord erlaubt Bot-DMs nur an User, die mindestens einen Server mit dem Bot teilen.
+// Bei einem Community-Bot ist das jeder Server, auf dem Astryx installiert ist.
 async function sendWelcomeDM(userId) {
   try {
     const ch = await fetch('https://discord.com/api/users/@me/channels', {
@@ -64,8 +52,6 @@ module.exports = async (req, res) => {
   const user = await (await fetch('https://discord.com/api/users/@me', {
     headers: { Authorization: `Bearer ${access_token}` },
   })).json();
-
-  await joinGuild(user.id, access_token);
 
   // Willkommens-DM nur beim ersten Mal
   const existing = readToken(cookies.session);
