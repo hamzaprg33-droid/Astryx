@@ -2,5 +2,24 @@
   "framework": null,
   "buildCommand": "",
   "outputDirectory": "public",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/datenschutz", "destination": "/privacy-policy", "permanent": true },
+    { "source": "/nutzungsbedingungen", "destination": "/terms-of-service", "permanent": true },
+    { "source": "/impressum", "destination": "/legal-notice", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/:userId(\\d{15,21})/guilds", "destination": "/guilds" },
+    { "source": "/:userId(\\d{15,21})/:guildId(\\d{15,21})", "destination": "/dashboard" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000" }
+      ]
+    }
+  ]
 }

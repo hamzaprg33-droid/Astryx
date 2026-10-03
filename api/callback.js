@@ -1,13 +1,18 @@
-const { API, DAYS, sessionCookie, shortCookie, clearCookie, parseCookies } = require('./_lib/session');
-const { bot, createInvite } = require('./_lib/discord');
+const { parseCookies, setSessionCookie, clearCookie, buildSession, getSession } = require('./_lib/session');
+const { joinMainGuild, fetchBotGuild, sendDM, sleep } = require('./_lib/discord');
+const { getLang, strings } = require('./_lib/i18n');
+const resultPage = require('./_lib/result-page');
 
-module.exports = async (req, res) => {
-  const { code, state, error } = req.query;
-  if (error) return res.redirect(302, '/verify');
-  const cookies = parseCookies(req);
-  if (!code || !state || state !== cookies.oauth_state) return res.status(400).send('Invalid request.');
+const DASHBOARD_URL = 'https://astryx-bot.vercel.app';
+const escapeMarkdown = (s) => String(s).replace(/([*_`~|\\[\]])/g, '\\$1');
 
-  const tokenRes = await fetch(`${API}/oauth2/token`, {
+async function handleVerify(req, res, { lang, T, code, state, cookies }) {
+  clearCookie(res, 'oauth_state');
+  if (!code || state !== cookies.oauth_state) {
+    return resultPage(res, { lang, ok: false, messages: [T.invalid], status: 400 });
+  }
+
+  const tokenRes = await fetch('https://discord.com/api/v10/oauth2/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
@@ -18,37 +23,84 @@ module.exports = async (req, res) => {
       redirect_uri: `${process.env.SITE_URL}/api/callback`,
     }),
   });
-  if (!tokenRes.ok) return res.status(400).send('Verification failed.');
-  const tok = await tokenRes.json();
+  if (!tokenRes.ok) return resultPage(res, { lang, ok: false, messages: [T.failed], status: 400 });
+  const tokens = await tokenRes.json();
 
-  const user = await (await fetch(`${API}/users/@me`, {
-    headers: { Authorization: `Bearer ${tok.access_token}` },
-  })).json();
-  if (!user.id || !/^\d+$/.test(user.id)) return res.status(400).send('Verification failed.');
+  const userRes = await fetch('https://discord.com/api/v10/users/@me', { headers: { Authorization: `Bearer ${tokens.access_token}` } });
+  if (!userRes.ok) return resultPage(res, { lang, ok: false, messages: [T.failed], status: 400 });
+  const user = await userRes.json();
 
-  // Automatisch dem Hauptserver beitreten (guilds.join). Fallback: einmalige Einladung.
-  let invite = null;
-  const main = process.env.MAIN_GUILD_ID;
-  if (main) {
-    try {
-      const j = await bot(`/guilds/${main}/members/${user.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ access_token: tok.access_token }),
-      });
-      if (j.status !== 201 && j.status !== 204) invite = await createInvite(main);
-    } catch { invite = await createInvite(main); }
+  const join = await joinMainGuild(user.id, tokens.access_token).catch(() => ({ joined: false }));
+  setSessionCookie(res, buildSession(user, tokens));
+
+  const messages = [T.verified];
+  if (join.joined) messages.push(T.joinedMain);
+  else if (join.invite) messages.push(T.joinFallback);
+
+  resultPage(res, {
+    lang,
+    ok: true,
+    messages,
+    link: join.invite ? { href: join.invite, label: T.joinButton } : null,
+    autoClose: !join.invite,
+    next: `/${user.id}/guilds`,
+    data: { userId: user.id },
+  });
+}
+
+async function handleInvite(req, res, { lang, T, state, cookies, queryGuild }) {
+  clearCookie(res, 'invite_state');
+  const guildId = state.split('.')[2];
+  if (state !== cookies.invite_state || (queryGuild && queryGuild !== guildId)) {
+    return resultPage(res, { lang, kind: 'invite', ok: false, messages: [T.invalid], status: 400 });
   }
 
-  const session = {
-    id: user.id,
-    name: user.global_name || user.username,
-    avatar: user.avatar,
-    at: tok.access_token,
-    rt: tok.refresh_token,
-    te: Date.now() + tok.expires_in * 1000,
-    exp: Date.now() + DAYS * 24 * 3600 * 1000,
-  };
+  const session = await getSession(req, res);
+  if (!session) return res.redirect(302, '/verify');
 
-  res.setHeader('Set-Cookie', [sessionCookie(session), clearCookie('oauth_state')]);
-  res.redirect(302, `/${user.id}/guilds${invite ? `?invite=${encodeURIComponent(invite)}` : ''}`);
+  let guild = null;
+  for (let i = 0; i < 4 && !guild; i++) {
+    if (i) await sleep(1200);
+    guild = await fetchBotGuild(guildId);
+  }
+  const next = `/${session.id}/guilds`;
+  if (!guild) return resultPage(res, { lang, kind: 'invite', ok: false, messages: [T.botMissing], next, status: 404 });
+
+  await sendDM(session.id, {
+    title: T.dmTitle,
+    description: T.dmBody(escapeMarkdown(guild.name), DASHBOARD_URL),
+    color: 0x00e5ff,
+    thumbnail: guild.icon ? { url: `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=128` } : undefined,
+  });
+
+  resultPage(res, {
+    lang,
+    kind: 'invite',
+    ok: true,
+    title: T.invitedTitle,
+    messages: [T.invited.replace('{guild}', guild.name)],
+    next,
+    data: { guildId },
+  });
+}
+
+module.exports = async (req, res) => {
+  const lang = getLang(req);
+  const T = strings(lang);
+  const { code, state, error, guild_id: queryGuild } = req.query;
+  const cookies = parseCookies(req);
+  const isInvite = typeof state === 'string' && state.startsWith('i.');
+
+  if (error) {
+    clearCookie(res, isInvite ? 'invite_state' : 'oauth_state');
+    return resultPage(res, { lang, kind: isInvite ? 'invite' : 'auth', ok: false, messages: [T.cancelled], status: 400 });
+  }
+  if (typeof state !== 'string') return resultPage(res, { lang, ok: false, messages: [T.invalid], status: 400 });
+
+  try {
+    if (isInvite) return await handleInvite(req, res, { lang, T, state, cookies, queryGuild });
+    return await handleVerify(req, res, { lang, T, code, state, cookies });
+  } catch {
+    return resultPage(res, { lang, kind: isInvite ? 'invite' : 'auth', ok: false, messages: [T.failed], status: 500 });
+  }
 };

@@ -3,20 +3,82 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard – Astryx</title>
+  <title data-i18n="dash.pageTitle">Dashboard – Astryx</title>
+  <meta name="theme-color" content="#04050d">
   <meta name="robots" content="noindex">
   <link rel="stylesheet" href="/style.css">
-  <script src="/i18n.js"></script>
 </head>
-<body data-title="dashboard">
+<body>
   <main class="wide">
-    <div id="head"></div>
-    <div class="panel" style="max-width:none">
-      <p id="msg"></p>
-      <a id="back" class="btn" href="#" data-i18n="dash_back"></a>
+    <a class="back" id="back" href="/" data-i18n="dash.back"></a>
+    <div id="content" class="dash">
+      <p class="status" role="status" data-i18n="dash.loading"></p>
     </div>
   </main>
   <script src="/app.js"></script>
-  <script src="/dashboard.js"></script>
+  <script>
+    const { t, me, make } = Astryx;
+    const [, uid, gid] = location.pathname.split('/');
+    const content = document.getElementById('content');
+    document.getElementById('back').href = `/${uid}/guilds`;
+
+    const message = (text, action) => content.replaceChildren(
+      make('div', { className: 'panel center' }, make('p', { textContent: text }), action || null)
+    );
+
+    const icon = (g) => g.icon
+      ? make('img', { className: 'guild-icon big', src: `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png?size=128`, alt: '', width: 72, height: 72 })
+      : make('span', { className: 'guild-icon big initials', 'aria-hidden': 'true', textContent: g.name.split(/\s+/).map(w => w[0] || '').join('').slice(0, 3) });
+
+    const stat = (label, value) => make('div', { className: 'stat' },
+      make('span', { className: 'stat-value', textContent: value }),
+      make('span', { className: 'stat-label', textContent: label })
+    );
+
+    const render = (g) => {
+      document.title = `${g.name} – Astryx`;
+      content.replaceChildren(
+        make('section', { className: 'dash-head' },
+          icon(g),
+          make('div', {},
+            make('h1', { className: 'page-title left', textContent: g.name }),
+            make('p', { className: 'sub', textContent: `${t('dash.yourRole')}: ${t(`role.${g.role}`)}` })
+          )
+        ),
+        make('div', { className: 'stats' },
+          stat(t('dash.members'), g.members == null ? '–' : g.members.toLocaleString(Astryx.lang)),
+          stat(t('dash.online'), g.online == null ? '–' : g.online.toLocaleString(Astryx.lang)),
+          stat(t('dash.yourRole'), t(`role.${g.role}`))
+        ),
+        make('div', { className: 'panel wide-panel' },
+          make('h2', { className: 'panel-title', textContent: t('dash.soonTitle') }),
+          make('p', { textContent: t('dash.soon') })
+        )
+      );
+    };
+
+    me.then(async u => {
+      if (!u) { location.href = '/verify'; return; }
+      if (u.id !== uid) { location.replace(`/${u.id}/${gid}`); return; }
+      try {
+        const r = await fetch(`/api/guild?id=${gid}`, { cache: 'no-store' });
+        if (r.status === 401) { location.href = '/verify'; return; }
+        if (r.status === 403) return message(t('dash.forbidden'));
+        if (r.status === 404) {
+          return message(t('dash.botMissing'), make('button', {
+            type: 'button', className: 'btn', textContent: t('guilds.invite'),
+            onclick: () => { if (!window.open(`/api/invite?guild=${gid}`, '_blank')) location.href = `/api/invite?guild=${gid}`; },
+          }));
+        }
+        if (!r.ok) return message(t(r.status === 429 ? 'guilds.rateLimited' : 'dash.error'));
+        render(await r.json());
+      } catch {
+        message(t('dash.error'));
+      }
+    });
+
+    const onInvite = (d) => { if (d && d.type === 'astryx-invite' && d.ok) location.reload(); };
+    try { new BroadcastChannel('astryx-invite').onmessage = (e) => onInvite(e.data); } catch {}
+  </script>
 </body>
 </html>

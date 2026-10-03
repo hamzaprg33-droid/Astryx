@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const { shortCookie } = require('./_lib/session');
 
 module.exports = (req, res) => {
   const state = crypto.randomBytes(16).toString('hex');
@@ -10,6 +9,6 @@ module.exports = (req, res) => {
     scope: 'identify guilds guilds.join',
     state,
   });
-  res.setHeader('Set-Cookie', shortCookie('oauth_state', state));
+  res.setHeader('Set-Cookie', `oauth_state=${state}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=600`);
   res.redirect(302, `https://discord.com/oauth2/authorize?${params}`);
 };

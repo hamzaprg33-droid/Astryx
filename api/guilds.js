@@ -1,20 +1,20 @@
-const { getFreshSession } = require('./_lib/session');
-const { manageableGuilds, botInGuild, roleOf } = require('./_lib/discord');
+const { getSession } = require('./_lib/session');
+const { manageableGuilds, botGuildIds } = require('./_lib/discord');
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
-  const s = await getFreshSession(req, res);
-  if (!s) return res.status(401).json({ error: 'unauthorized' });
-  // Nur der eingeloggte User darf seine eigene Liste sehen
-  if (req.query.uid !== s.id) return res.status(403).json({ error: 'forbidden' });
+  const session = await getSession(req, res);
+  if (!session) return res.status(401).json({ error: 'unauthorized' });
 
+  const fresh = req.query.fresh === '1';
   try {
-    const mine = (await manageableGuilds(s.at)).slice(0, 100);
-    const hasBot = await Promise.all(mine.map(g => botInGuild(g.id)));
-    res.json({
-      guilds: mine.map((g, i) => ({ id: g.id, name: g.name, icon: g.icon, role: roleOf(g), hasBot: hasBot[i] })),
-    });
-  } catch {
-    res.status(502).json({ error: 'discord' });
+    const [guilds, botIds] = await Promise.all([manageableGuilds(session, fresh), botGuildIds(fresh)]);
+    const list = guilds
+      .map(g => ({ id: g.id, name: g.name, icon: g.icon, role: g.owner ? 'owner' : 'admin', bot: botIds.has(g.id) }))
+      .sort((a, b) => (b.bot - a.bot) || a.name.localeCompare(b.name));
+    res.json({ userId: session.id, guilds: list });
+  } catch (e) {
+    if (e.status === 401) return res.status(401).json({ error: 'unauthorized' });
+    res.status(e.status === 429 ? 429 : 502).json({ error: e.status === 429 ? 'rate_limited' : 'discord_error' });
   }
 };
