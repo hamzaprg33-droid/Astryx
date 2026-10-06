@@ -3,109 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-i18n="guilds.pageTitle">Server auswählen – Astryx</title>
-  <meta name="theme-color" content="#04050d">
+  <title>Select a Server – Astryx</title>
   <meta name="robots" content="noindex">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css?v=2">
+  <script src="/i18n.js?v=2"></script>
 </head>
-<body>
+<body data-title="guilds">
   <main class="wide">
-    <section class="guilds-head">
-      <div>
-        <h1 class="page-title left" data-i18n="guilds.title"></h1>
-        <p class="sub" data-i18n="guilds.subtitle"></p>
-      </div>
-      <div class="guilds-tools">
-        <label class="search">
-          <span class="sr-only" data-i18n="guilds.searchLabel"></span>
-          <input id="q" type="search" autocomplete="off" data-i18n-placeholder="guilds.search">
-        </label>
-        <button class="btn" id="refresh" type="button" data-i18n="guilds.refresh"></button>
-      </div>
-    </section>
-    <p id="status" class="status" role="status" aria-live="polite"></p>
-    <ul id="grid" class="guild-grid"></ul>
+    <h2 class="page-title" data-i18n="guilds_title"></h2>
+    <div id="notice"></div>
+    <div class="toolbar">
+      <input id="search" class="input" type="search" autocomplete="off" data-i18n-ph="guilds_search">
+      <button id="refresh" class="btn" type="button" data-i18n="guilds_refresh"></button>
+    </div>
+    <div id="status" class="status"></div>
+    <div id="grid" class="grid"></div>
   </main>
-  <script src="/app.js"></script>
-  <script>
-    const { t, me, make } = Astryx;
-    const uid = location.pathname.split('/')[1];
-    const grid = document.getElementById('grid');
-    const status = document.getElementById('status');
-    const q = document.getElementById('q');
-    const refresh = document.getElementById('refresh');
-    let guilds = [];
-
-    const iconFor = (g) => g.icon
-      ? make('img', { className: 'guild-icon', src: `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png?size=96`, alt: '', width: 48, height: 48, loading: 'lazy' })
-      : make('span', { className: 'guild-icon initials', 'aria-hidden': 'true', textContent: g.name.split(/\s+/).map(w => w[0] || '').join('').slice(0, 3) });
-
-    const inviteBot = (id) => {
-      const tab = window.open(`/api/invite?guild=${id}`, '_blank');
-      if (!tab) location.href = `/api/invite?guild=${id}`;
-      else status.textContent = t('guilds.waitingInvite');
-    };
-
-    const card = (g) => {
-      const body = [
-        make('span', { className: 'guild-info' },
-          iconFor(g),
-          make('span', { className: 'guild-text' },
-            make('span', { className: 'guild-name', textContent: g.name }),
-            make('span', { className: 'guild-role', textContent: t(`role.${g.role}`) })
-          )
-        ),
-        make('span', { className: 'guild-action', textContent: t(g.bot ? 'guilds.configure' : 'guilds.invite') }),
-      ];
-      const el = g.bot
-        ? make('a', { className: 'guild-card', href: `/${uid}/${g.id}` }, ...body)
-        : make('button', { type: 'button', className: 'guild-card off', onclick: () => inviteBot(g.id) }, ...body);
-      return make('li', {}, el);
-    };
-
-    const render = () => {
-      const term = q.value.trim().toLowerCase();
-      const shown = guilds.filter(g => g.name.toLowerCase().includes(term));
-      grid.replaceChildren(...shown.map(card));
-      if (!guilds.length) status.textContent = t('guilds.empty');
-      else if (!shown.length) status.textContent = t('guilds.noMatch');
-      else status.textContent = '';
-    };
-
-    const load = async (fresh = false) => {
-      refresh.disabled = true;
-      if (!guilds.length) status.textContent = t('guilds.loading');
-      try {
-        const r = await fetch(`/api/guilds${fresh ? '?fresh=1' : ''}`, { cache: 'no-store' });
-        if (r.status === 401) { location.href = '/verify'; return; }
-        if (!r.ok) { status.textContent = t(r.status === 429 ? 'guilds.rateLimited' : 'guilds.error'); return; }
-        const data = await r.json();
-        guilds = data.guilds;
-        render();
-        if (data.botError) status.textContent = t('guilds.botError');
-      } catch {
-        status.textContent = t('guilds.error');
-      } finally {
-        refresh.disabled = false;
-      }
-    };
-
-    q.addEventListener('input', render);
-    refresh.addEventListener('click', () => load(true));
-
-    const onInvite = (data) => {
-      if (!data || data.type !== 'astryx-invite') return;
-      if (data.ok) load(true);
-      else status.textContent = '';
-    };
-    try { new BroadcastChannel('astryx-invite').onmessage = (e) => onInvite(e.data); } catch {}
-    window.addEventListener('message', (e) => { if (e.origin === location.origin) onInvite(e.data); });
-
-    me.then(u => {
-      if (!u) { location.href = '/verify'; return; }
-      if (u.id !== uid) { location.replace(`/${u.id}/guilds`); return; }
-      load();
-    });
-  </script>
+  <script src="/app.js?v=2"></script>
+  <script src="/guilds.js?v=2"></script>
 </body>
 </html>

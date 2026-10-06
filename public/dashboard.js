@@ -18,7 +18,7 @@
 
   try {
     const r = await fetch(`/api/guild?uid=${uid}&gid=${gid}`, { cache: 'no-store' });
-    if (r.status === 401) return location.replace('/verify');
+    if (r.status === 401) { msg.textContent = t('guilds_expired'); return; }
     if (r.status === 403) { msg.textContent = t('guilds_forbidden'); return; }
     if (r.status === 404) { msg.textContent = t('dash_nobot'); return; }
     if (!r.ok) throw new Error();

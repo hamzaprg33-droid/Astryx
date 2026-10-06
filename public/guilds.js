@@ -28,6 +28,11 @@
   }
 
   const setStatus = (msg) => ($('#status').textContent = msg);
+  const showExpired = () => {
+    const st = $('#status');
+    st.replaceChildren(make('div', { textContent: t('guilds_expired') }),
+      make('a', { className: 'btn', style: 'margin-top:14px', href: '/api/verify', textContent: t('verify_again') }));
+  };
   const initials = (n) => n.split(/\s+/).map(w => w[0]).join('').slice(0, 3).toUpperCase();
 
   let all = [];
@@ -61,7 +66,7 @@
     setStatus(t('guilds_loading'));
     try {
       const r = await fetch(`/api/guilds?uid=${uid}`, { cache: 'no-store' });
-      if (r.status === 401) return location.replace('/verify');
+      if (r.status === 401) return showExpired();
       if (r.status === 403) return setStatus(t('guilds_forbidden'));
       if (!r.ok) throw new Error();
       all = (await r.json()).guilds;
