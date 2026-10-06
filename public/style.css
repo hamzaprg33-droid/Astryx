@@ -25,21 +25,6 @@ body::before {
     radial-gradient(60% 50% at 50% 0%, rgba(138, 92, 255, .30), transparent 70%),
     radial-gradient(50% 40% at 90% 100%, rgba(0, 229, 255, .18), transparent 70%);
 }
-body::after {
-  content: "";
-  position: fixed; left: -50%; right: -50%; bottom: 0; height: 55%; z-index: -1;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  transform: perspective(420px) rotateX(62deg);
-  transform-origin: 50% 100%;
-  -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 90%);
-  mask-image: linear-gradient(to top, #000 10%, transparent 90%);
-  animation: grid 4s linear infinite;
-}
-@keyframes grid { to { background-position: 0 64px; } }
-
 .topbar {
   position: fixed; top: 0; right: 0; z-index: 10;
   display: flex; align-items: center; gap: 14px;
