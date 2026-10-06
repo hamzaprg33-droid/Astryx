@@ -79,8 +79,10 @@
         const r = await fetch(`/api/guilds${fresh ? '?fresh=1' : ''}`, { cache: 'no-store' });
         if (r.status === 401) { location.href = '/verify'; return; }
         if (!r.ok) { status.textContent = t(r.status === 429 ? 'guilds.rateLimited' : 'guilds.error'); return; }
-        guilds = (await r.json()).guilds;
+        const data = await r.json();
+        guilds = data.guilds;
         render();
+        if (data.botError) status.textContent = t('guilds.botError');
       } catch {
         status.textContent = t('guilds.error');
       } finally {
