@@ -48,6 +48,5 @@
       "destination": "/legal-notice",
       "permanent": true
     }
-  ],
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)Guild Data'"
+  ]
 }
