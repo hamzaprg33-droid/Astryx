@@ -39,6 +39,31 @@ async function check(r) {
   throw fail(r.status === 401 || r.status === 403 ? 'db_auth' : 'db', r.status, `GitHub ${r.status}: ${String(msg).slice(0, 160)}`);
 }
 
+// Bei 403/404 beim Schreiben: GitHub fragen, WARUM (ohne den Token selbst preiszugeben)
+async function diagnose(r) {
+  const { token, repo } = cfg();
+  const parts = [];
+  const h = (n) => (r.headers && r.headers.get ? r.headers.get(n) : null);
+  const need = h('x-accepted-github-permissions');
+  if (need) parts.push(`benötigt: ${need}`);
+  const classic = !token.startsWith('github_pat_');
+  // Kennzeichen, mit denen du ihn bei GitHub wiedererkennst (der Token selbst wird nie angezeigt)
+  parts.push(`${classic ? 'Token: classic' : 'Token: fine-grained'}, endet auf …${token.slice(-4)}`);
+  const exp = h('github-authentication-token-expiration');
+  if (exp) parts.push(`läuft ab: ${exp}`);
+  const scopes = h('x-oauth-scopes');
+  if (classic && scopes != null) parts.push(`Scopes: ${scopes || 'keine'}`);
+  try {
+    const hd = { Authorization: `Bearer ${token}`, 'User-Agent': 'astryx-dashboard' };
+    const me = await fetch('https://api.github.com/user', { headers: hd });
+    if (me.ok) parts.push(`Token-Besitzer: ${(await me.json()).login}`);
+    const rp = await fetch(`https://api.github.com/repos/${repo}`, { headers: hd });
+    if (rp.ok) { const j = await rp.json(); parts.push(`Repo ${j.full_name}: ${j.private ? 'privat' : 'ÖFFENTLICH'}`); }
+    else parts.push(`Repo nicht lesbar (${rp.status})`);
+  } catch { /* Diagnose ist optional */ }
+  return parts.join(' | ');
+}
+
 // "Magdeburg RP" -> "Magdeburg_RP"
 const safeName = (name) =>
   String(name || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
@@ -95,7 +120,11 @@ async function updateGuild(gid, guildName, mutate) {
 
     const r = await gh(enc(`${ROOT}/${folder}/${FILE}`), { method: 'PUT', body: JSON.stringify(body) });
     if ((r.status === 409 || r.status === 422) && attempt === 0) continue; // parallel geändert -> nochmal
-    if (r.status === 404) throw fail('db_auth', 404, `GitHub 404: Repo, Branch "${cfg().branch}" oder Token-Rechte (Contents: Read and write) prüfen`);
+    if (r.status === 403 || r.status === 404) {
+      let msg = '';
+      try { msg = (await r.clone().json()).message || ''; } catch {}
+      throw fail('db_auth', r.status, `GitHub ${r.status}: ${String(msg).slice(0, 120)} | ${await diagnose(r)}`);
+    }
     await check(r);
     return out;
   }
