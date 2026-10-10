@@ -27,7 +27,7 @@ const safe = (s) => {
   const token = process.env.GITHUB_TOKEN || '';
   let t = String(s || '');
   if (token.trim()) t = t.split(token.trim()).join('***');
-  return t.replace(/(gh[pousr]_|github_pat_)[A-Za-z0-9_]+/g, '***').slice(0, 200);
+  return t.replace(/(gh[pousr]_|github_pat_)[A-Za-z0-9_]+/g, '***').slice(0, 500);
 };
 
 module.exports = async (req, res) => {
