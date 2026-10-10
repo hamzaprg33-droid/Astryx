@@ -294,7 +294,8 @@ main.pad-bottom { padding-bottom: 120px; }
 
 /* Kanal-Auswahl mit Suche */
 .combo { position: relative; margin-top: 14px; }
-.combo-list { position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 6px); max-height: 260px; overflow-y: auto; background: rgba(8, 11, 24, .98); border: 1px solid var(--cyan); box-shadow: 0 0 30px rgba(0, 229, 255, .18); }
+/* Liste klappt INNERHALB der Karte auf (die Karte hat abgeschnittene Ecken per clip-path, das würde eine schwebende Liste abschneiden) */
+.combo-list { margin-top: 6px; max-height: 260px; overflow-y: auto; background: rgba(8, 11, 24, .98); border: 1px solid var(--cyan); box-shadow: 0 0 30px rgba(0, 229, 255, .18); }
 .combo-list[hidden] { display: none; }
 .combo-opt { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; cursor: pointer; font-size: .9rem; }
 .combo-opt small { color: var(--muted); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
