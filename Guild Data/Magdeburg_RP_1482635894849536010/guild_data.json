@@ -9,7 +9,7 @@
     "text": "@neuer_user",
     "embedEnabled": true,
     "embed": {
-      "title": "Herzliches willkommen auf {server}! 🎉",
+      "title": "Herzliches willkommen auf {server}!",
       "description": "Schön, dass du da bist, {user}!\nLies dir die Regeln durch und hab viel Spaß am RP! Du bist unser {members}. Mitglied.",
       "color": "#4D4578"
     }
