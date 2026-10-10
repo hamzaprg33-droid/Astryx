@@ -6,15 +6,15 @@
   "rewrites": [
     {
       "source": "/:uid(\\d+)/guilds",
-      "destination": "/guilds.html"
+      "destination": "/guilds"
     },
     {
       "source": "/:uid(\\d+)/:gid(\\d+)",
-      "destination": "/dashboard.html"
+      "destination": "/dashboard"
     },
     {
       "source": "/:uid(\\d+)/:gid(\\d+)/welcomer",
-      "destination": "/welcomer.html"
+      "destination": "/welcomer"
     }
   ],
   "redirects": [
