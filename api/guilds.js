@@ -1,5 +1,5 @@
 const { getFreshSession } = require('./_lib/session');
-const { manageableGuilds, botInGuild, roleOf } = require('./_lib/discord');
+const { manageableGuilds, botGuildInfo, roleOf } = require('./_lib/discord');
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
@@ -10,9 +10,9 @@ module.exports = async (req, res) => {
 
   try {
     const mine = (await manageableGuilds(res, s)).slice(0, 100);
-    const hasBot = await Promise.all(mine.map(g => botInGuild(g.id)));
+    const info = await Promise.all(mine.map(g => botGuildInfo(g.id)));
     res.json({
-      guilds: mine.map((g, i) => ({ id: g.id, name: g.name, icon: g.icon, role: roleOf(g), hasBot: hasBot[i] })),
+      guilds: mine.map((g, i) => ({ id: g.id, name: g.name, icon: g.icon, role: roleOf(g), hasBot: !!info[i], description: info[i] ? info[i].description : '' })),
     });
   } catch (e) {
     if (e.code === 'token') return res.status(401).json({ error: 'token' });
