@@ -61,6 +61,17 @@ async function botInGuild(guildId) {
   try { return (await bot(`/guilds/${guildId}`)).ok; } catch { return false; }
 }
 
+// Ist der Bot auf dem Server? Wenn ja, kommt die Server-Beschreibung gleich mit (nur Community-Server haben eine).
+// Gibt null zurück, wenn der Bot nicht auf dem Server ist.
+async function botGuildInfo(guildId) {
+  try {
+    const r = await bot(`/guilds/${guildId}`);
+    if (!r.ok) return null;
+    const g = await r.json();
+    return { description: typeof g.description === 'string' ? g.description.trim().slice(0, 200) : '' };
+  } catch { return null; }
+}
+
 // Einladung (1 Nutzung, 10 Minuten) in irgendeinen Textkanal erstellen.
 async function createInvite(guildId) {
   try {
@@ -78,4 +89,4 @@ async function createInvite(guildId) {
   return null;
 }
 
-module.exports = { bot, asUser, isManageable, roleOf, manageableGuilds, botInGuild, createInvite };
+module.exports = { bot, asUser, isManageable, roleOf, manageableGuilds, botInGuild, botGuildInfo, createInvite };
