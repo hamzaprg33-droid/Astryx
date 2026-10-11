@@ -6,7 +6,7 @@
   --muted: #7d8fb3;
   --line: rgba(0, 229, 255, .22);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
+ * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background: var(--bg);
@@ -338,3 +338,7 @@ main.pad-bottom { padding-bottom: 120px; }
 }
 .sk-line { height: 14px; max-width: 100%; border-radius: 3px; }
 .dash-head .icon.sk { border-color: var(--line); }
+
+/* Server-Beschreibung in der Serverliste (max. 3 Zeilen) */
+.card .gdesc { margin: 0; color: var(--muted); font-size: .78rem; line-height: 1.45; word-break: break-word;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
