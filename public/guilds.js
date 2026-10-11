@@ -48,6 +48,7 @@
         icon,
         make('div', { className: 'gname', textContent: g.name }),
         make('span', { className: 'tag rec', textContent: t(g.role === 'owner' ? 'role_owner' : 'role_admin') }),
+        ...(g.description ? [make('p', { className: 'gdesc', textContent: g.description, title: g.description })] : []),
         btn
       ));
     });
