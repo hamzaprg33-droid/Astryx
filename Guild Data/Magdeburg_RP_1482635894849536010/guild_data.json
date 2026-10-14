@@ -1,16 +1,16 @@
 {
   "guild_id": "1482635894849536010",
   "server_name": "🔥 Magdeburg RP 🔊",
-  "updated_at": "2026-10-10T17:13:46.256Z",
+  "updated_at": "2026-10-14T08:18:38.742Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1482816566394617869",
     "textEnabled": true,
-    "text": "@neuer_user",
+    "text": "@user",
     "embedEnabled": true,
     "embed": {
       "title": "Herzliches willkommen auf {server}!",
-      "description": "Schön, dass du da bist, {user}!\nLies dir die Regeln durch und hab viel Spaß am RP! Du bist unser {members}. Mitglied.",
+      "description": "Schön, dass du da bist, <user_name>!\nLies dir die Regeln durch und hab viel Spaß am RP! Du bist unser {members}. Mitglied.",
       "color": "#4D4578"
     }
   }
