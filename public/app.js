@@ -10,6 +10,15 @@
 
   I.apply();
 
+  // Tab-Symbol (Favicon) für ALLE Seiten: public/logo.png
+  // "?v=1" hochzählen, wenn du das Logo austauschst – Browser merken sich Tab-Symbole sehr hartnäckig.
+  ['icon', 'apple-touch-icon'].forEach((rel) => {
+    let link = document.querySelector(`link[rel="${rel}"]`);
+    if (!link) { link = document.createElement('link'); link.rel = rel; document.head.append(link); }
+    if (rel === 'icon') link.type = 'image/png';
+    link.href = '/logo.png?v=1';
+  });
+
   // Footer: Datenschutz · Nutzungsbedingungen · Impressum
   document.body.append(make('footer', { className: 'footer' },
     make('a', { href: '/privacy-policy', textContent: t('footer_privacy') }), ' · ',
