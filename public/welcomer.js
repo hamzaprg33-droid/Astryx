@@ -84,7 +84,7 @@
   const parts = location.pathname.split('/').filter(Boolean);
   const qs = new URLSearchParams(location.search);
   const [uid, gid] = parts.length >= 3 ? parts : [qs.get('uid'), qs.get('gid')];
-  $('#title').append(L.name, F.tag('beta', true));
+  $('#title').append(L.name);
   const msg = $('#msg');
 
   const ME = window.ME || fetch('/api/me').then(r => (r.ok ? r.json() : null)).then(d => (d && d.user) || null).catch(() => null);
