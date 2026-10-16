@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot",
-  "updated_at": "2026-10-14T05:13:00.169Z",
+  "updated_at": "2026-10-16T05:02:39.073Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -13,5 +13,14 @@
       "description": "Great to have you here, <user_name>!\nTake a look at the rules and make yourself at home. You are member **#{members}**.\n\n**Dashboard:** https://astryx-bot.vercel.app\n**Support:** <#1558733706493956147>\n**Rules:** <#1556914843934523453>",
       "color": "#652ECC"
     }
+  },
+  "joinroles": {
+    "enabled": true,
+    "roles": [
+      "1556904223663202304"
+    ],
+    "timer": 1,
+    "applyToBots": false,
+    "botRole": "1559901840009732156"
   }
 }
