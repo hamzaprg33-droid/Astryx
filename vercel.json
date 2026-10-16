@@ -15,6 +15,10 @@
     {
       "source": "/:uid(\\d+)/:gid(\\d+)/welcomer",
       "destination": "/welcomer"
+    },
+    {
+      "source": "/:uid(\\d+)/:gid(\\d+)/joinroles",
+      "destination": "/joinroles"
     }
   ],
   "redirects": [
