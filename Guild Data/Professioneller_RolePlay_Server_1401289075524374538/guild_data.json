@@ -1,14 +1,25 @@
 {
   "guild_id": "1401289075524374538",
   "server_name": "Professioneller RolePlay Server",
-  "updated_at": "2026-10-19T10:33:05.479Z",
+  "updated_at": "2026-10-19T10:33:38.417Z",
   "messages": {
     "templates": [
       {
         "id": "5e1k5g47",
         "name": "Test",
         "content": "Hey!\nIch bin @Astryx\nViel Spaß auf {servername} ",
-        "embeds": [],
+        "embeds": [
+          {
+            "color": "#2ECC71",
+            "author": "Paulowitch ",
+            "title": "Hey!",
+            "description": "\nIch bin @Astryx\nViel Spaß auf {servername} ",
+            "thumbnail": "",
+            "image": "",
+            "footer": "",
+            "fields": []
+          }
+        ],
         "components": []
       }
     ]
