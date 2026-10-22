@@ -13,6 +13,7 @@ const URL_OK = /^https?:\/\/\S{1,2000}$/i;
 const STYLES = { primary: 1, secondary: 2, success: 3, danger: 4 };
 const WEBHOOK = /^https:\/\/(?:(?:ptb|canary)\.)?discord(?:app)?\.com\/api(?:\/v\d+)?\/webhooks\/(\d{15,25})\/([A-Za-z0-9_-]{20,120})\/?$/;
 const TAG = 'Powered by Astryx';
+const EDIT_LINK = /^https:\/\/(?:(?:ptb|canary)\.)?discord(?:app)?\.com\/channels\/(\d{1,25})\/(\d{1,25})\/(\d{1,25})\/?$/;
 
 // ---------- Prüfregeln (strikt: der Server ist die letzte Instanz) ----------
 const bad = (error, detail = '', extra = {}) => Object.assign(new Error(error), { code: 'invalid_msg', error, detail, ...extra });
@@ -207,6 +208,7 @@ const cleanList = (g) => {
 async function discordFailure(res, r, webhook) {
   let j = {}; try { j = await r.json(); } catch {}
   if (webhook && (r.status === 404 || r.status === 401 || j.code === 10015 || j.code === 50027)) return res.status(400).json({ error: 'webhook_unknown' });
+  if (j.code === 50005) return res.status(400).json({ error: 'not_bot_message' });
   if (r.status === 403 || j.code === 50013 || j.code === 50001) return res.status(403).json({ error: 'no_permission' });
   if (r.status === 404) return res.status(400).json({ error: 'channel_unknown' });
   if (r.status === 429) return res.status(429).json({ error: 'rate_limited' });
@@ -300,6 +302,40 @@ module.exports = async (req, res) => {
       if (!r.ok) return discordFailure(res, r, webhook);
       const sent = await r.json().catch(() => ({}));
       return res.json({ ok: true, url: !webhook && sent.id ? `https://discord.com/channels/${a.gid}/${body.channelId}/${sent.id}` : null });
+    }
+
+    // ---------- Bereits gesendete Nachricht mit der Vorlage bearbeiten ----------
+    if (body.op === 'edit') {
+      const id = String(body.id || '');
+      if (!ID.test(id)) return res.status(400).json({ error: 'invalid' });
+      const m = EDIT_LINK.exec(String(body.link || '').trim());
+      if (!m) return res.status(400).json({ error: 'link_invalid' });
+      if (m[1] !== a.gid) return res.status(400).json({ error: 'link_wrong_server' });
+      const channelId = m[2], messageId = m[3];
+      const botId = (process.env.DISCORD_CLIENT_ID || '').trim();
+
+      const [gr, gS, chR, msgR] = await Promise.all([
+        bot(`/guilds/${a.gid}?with_counts=true`), readGuild(a.gid), bot(`/channels/${channelId}`), bot(`/channels/${channelId}/messages/${messageId}`),
+      ]);
+      if (!gr.ok) return res.status(404).json({ error: 'no_bot' });
+      const tpl = cleanList(gS).find(x => x.id === id);
+      if (!tpl) return res.status(404).json({ error: 'template_missing' });
+
+      const missing = (r) => (r.status === 404 ? res.status(400).json({ error: 'message_unknown' }) : discordFailure(res, r, false));
+      if (!chR.ok) return missing(chR);
+      // Der Kanal muss WIRKLICH zu diesem Server gehören (sonst könnte man Nachrichten des Bots auf fremden Servern ändern)
+      if ((await chR.json()).guild_id !== a.gid) return res.status(400).json({ error: 'link_wrong_server' });
+      if (!msgR.ok) return missing(msgR);
+      const old = await msgR.json();
+      if (old.webhook_id) return res.status(400).json({ error: 'webhook_message' });   // Webhook-Nachrichten kann der Bot nicht ändern
+      if (botId && (!old.author || old.author.id !== botId)) return res.status(400).json({ error: 'not_bot_message' });
+
+      const roleAny = new Proxy({}, { get: () => ({ assignable: true, name: '' }) });
+      const payload = buildPayload(normalizeTemplate(tpl, roleAny), await gr.json(), false);
+      payload.components = payload.components || [];   // hat die Vorlage keine Buttons, werden alte Buttons entfernt
+      const r = await bot(`/channels/${channelId}/messages/${messageId}`, { method: 'PATCH', body: JSON.stringify(payload) });
+      if (!r.ok) return discordFailure(res, r, false);
+      return res.json({ ok: true, url: `https://discord.com/channels/${a.gid}/${channelId}/${messageId}` });
     }
 
     return res.status(400).json({ error: 'invalid' });
