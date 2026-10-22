@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot",
-  "updated_at": "2026-10-20T10:45:22.712Z",
+  "updated_at": "2026-10-22T06:39:06.725Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -46,7 +46,7 @@
       {
         "id": "7107171i",
         "name": "update",
-        "content": "## ASTRYX BOT - UPDATE ALPHA v0.73.13\n<@&1556904223663202304>\n\n### New Feature\n**__Message Module__**\n- Create and manage custom messages\n- Support for embeds and normal text\n- Buttons and select menus with custom functions\n- Custom webhook support\n- Up to 100 messages for VIPs\n- Unlimited messages for server boosters\n\n### Improvements\n- Further dashboard improvements\n- Bug fixes and stability improvements\n\n========================================\n\nAstryx Bot | Alpha v0.73.13 - Message Module",
+        "content": "## ASTRYX BOT - UPDATE ALPHA v0.73.14\n## Message Module - Edit Messages & Dashboard Improvements\n==================================================\n\n### SUMMARY\n--------------------------------------------------\nThe Message Module has been improved! You can now edit\nmessages directly using their message link. Additionally,\nbug fixes and dashboard visual improvements have been\nimplemented.\n\n### NEW FEATURES\n--------------------------------------------------\n**__Edit Messages__**\n  - Edit existing messages directly via their message link.\n  - Webhook messages are excluded from this feature.\n\n### IMPROVEMENTS\n--------------------------------------------------\n**__Bug Fixes__**\n  - Fixed various bugs to improve stability.\n\n**__Dashboard Improvements__**\n  - Improved the dashboard's visual appearance.\n\n--------------------------------------------------\nAstryx Bot | Alpha v0.73.14 - Message Module Update\nPing: <@&1556904223663202304>",
         "embeds": [],
         "components": []
       },
