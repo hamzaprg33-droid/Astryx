@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot",
-  "updated_at": "2026-10-22T06:39:06.725Z",
+  "updated_at": "2026-10-22T06:42:30.968Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -33,7 +33,7 @@
           {
             "color": "#2ECC71",
             "author": "",
-            "title": "Astryx Bot Rules",
+            "title": "<:logo:1560895553272029315> Astryx Bot Rules <:logo:1560895553272029315>",
             "description": "> **Welcome to the official Astryx-Bot Discord server!**\n> Please follow these rules to keep our community friendly and professional.\n\n## **1. Respect**\n\n* Treat everyone with **respect**.\n* No harassment, discrimination, bullying, or personal attacks.\n* Keep discussions friendly and constructive.\n\n## **2. Chat & Spam**\n\n* No spam, message flooding, or unnecessary mentions.\n* Use channels for their intended purpose.\n* Do not abuse `@everyone` or `@here`.\n\n## **3. Advertising**\n\n* No unsolicited advertising or self-promotion.\n* Advertising is only allowed where explicitly permitted.\n\n## **4. Content**\n\n* No **NSFW, illegal, graphic, or inappropriate content**.\n* No scams, phishing, malicious links, or files.\n* Do not share private or personal information.\n\n## **5. Bugs & Suggestions**\n\n* Provide **detailed bug reports** whenever possible.\n* Screenshots and recordings can help our developers.\n* Check existing reports before submitting a new one.\n* Suggestions and feedback are always welcome.\n\n## **6. Security**\n\n* Do not exploit, attack, or intentionally disrupt Astryx.\n* Never share malware, token grabbers, or phishing links.\n* Report security issues privately to the **Astryx Team**.\n\n## **7. Staff & Moderation**\n\n* Follow reasonable instructions from **Astryx Staff**.\n* Do not impersonate staff.\n* Do not evade punishments or moderation.\n* Disputes should be handled privately with staff.\n\n## **8. Common Sense**\n\n* Use **common sense** and respect others.\n* Exploiting rule loopholes may still result in moderation.\n\n## **9. Discord Rules**\n\n* Follow **[Discord's Terms of Service](https://discord.com/terms)** and **[Community Guidelines](https://discord.com/guidelines)**.\n\n## **10. Enforcement**\n\n> Rule violations may result in a **warning, timeout, kick, or ban** depending on severity.\n\n**By staying in this server, you agree to follow these rules.**\n\n> 💙 **Thank you for helping us keep Astryx safe and professional!**",
             "thumbnail": "",
             "image": "",
