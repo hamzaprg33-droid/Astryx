@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-23T08:32:14.840Z",
+  "updated_at": "2026-10-23T08:35:52.029Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -41,7 +41,26 @@
             "fields": []
           }
         ],
-        "components": []
+        "components": [
+          {
+            "id": "64081v5i",
+            "type": "buttons",
+            "items": [
+              {
+                "id": "0l6s6i00",
+                "label": "I agree with the rules",
+                "style": "success",
+                "actions": [
+                  {
+                    "type": "message",
+                    "text": "a",
+                    "mode": "ephemeral"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
         "id": "7107171i",
