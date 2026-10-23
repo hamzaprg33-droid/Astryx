@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-23T08:49:09.472Z",
+  "updated_at": "2026-10-23T08:49:56.118Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -66,7 +66,7 @@
                 "actions": [
                   {
                     "type": "message",
-                    "text": "## <:logo:1560895553272029315> Astryx Bot Regeln <:logo:1560895553272029315>\n> **Willkommen auf dem offiziellen Astryx-Bot Discord-Server!**\n> Bitte befolge diese Regeln, um unsere Community freundlich und professionell zu halten.\n\n## **1. Respekt**\n* Behandle jeden mit **Respekt**.\n* Keine Belästigung, Diskriminierung, Mobbing oder persönlichen Angriffe.\n* Halte Diskussionen freundlich und konstruktiv.\n## **2. Chat & Spam**\n* Kein Spam, Nachrichten-Flooding oder unnötige Erwähnungen (Mentions).\n* Nutze die Kanäle für ihren vorgesehenen Zweck.\n* Missbrauche `@everyone` oder `@here` nicht.\n## **3. Werbung**\n* Keine ungefragte Werbung oder Eigenwerbung (Self-Promotion).\n* Werbung ist nur dort erlaubt, wo es ausdrücklich gestattet ist.\n## **4. Inhalte**\n* Keine **NSFW, illegalen, grafischen oder unangemessenen Inhalte**.\n* Keine Scams, Phishing, schädlichen Links oder Dateien.\n* Teile keine privaten oder persönlichen Informationen.\n## **5. Bugs & Vorschläge**\n* Reiche nach Möglichkeit **detaillierte Fehlerberichte (Bug Reports)** ein.\n* Screenshots und Aufnahmen können unseren Entwicklern helfen.\n* Überprüfe bestehende Berichte, bevor du einen neuen einreichst.\n* Vorschläge und Feedback sind immer willkommen.",
+                    "text": "## <:logo:1560895553272029315> Astryx Bot Regeln <:logo:1560895553272029315>\n## **1. Respekt**\n* Behandle jeden mit **Respekt**.\n* Keine Belästigung, Diskriminierung, Mobbing oder persönlichen Angriffe.\n* Halte Diskussionen freundlich und konstruktiv.\n## **2. Chat & Spam**\n* Kein Spam, Nachrichten-Flooding oder unnötige Erwähnungen (Mentions).\n* Nutze die Kanäle für ihren vorgesehenen Zweck.\n* Missbrauche `@everyone` oder `@here` nicht.\n## **3. Werbung**\n* Keine ungefragte Werbung oder Eigenwerbung (Self-Promotion).\n* Werbung ist nur dort erlaubt, wo es ausdrücklich gestattet ist.\n## **4. Inhalte**\n* Keine **NSFW, illegalen, grafischen oder unangemessenen Inhalte**.\n* Keine Scams, Phishing, schädlichen Links oder Dateien.\n* Teile keine privaten oder persönlichen Informationen.\n## **5. Bugs & Vorschläge**\n* Reiche nach Möglichkeit **detaillierte Fehlerberichte (Bug Reports)** ein.\n* Screenshots und Aufnahmen können unseren Entwicklern helfen.\n* Überprüfe bestehende Berichte, bevor du einen neuen einreichst.\n* Vorschläge und Feedback sind immer willkommen.",
                     "mode": "ephemeral"
                   },
                   {
