@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-23T08:45:25.814Z",
+  "updated_at": "2026-10-23T08:47:04.860Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -71,7 +71,7 @@
                   },
                   {
                     "type": "message",
-                    "text": "## **6. Sicherheit**\n* Nutze keine Exploits aus, greife Astryx nicht an und störe den Bot nicht absichtlich.\n* Teile niemals Malware, Token-Grabber oder Phishing-Links.\n* Melde Sicherheitsprobleme privat an das **Astryx-Team**.\n## **7. Team & Moderation**\n* Befolge angemessene Anweisungen des **Astryx-Teams (Staff)**.\n* Gib dich nicht als Teammitglied aus.\n* Umgehe keine Strafen oder Moderationsmaßnahmen.\n* Konflikte sollten privat mit dem Team geklärt werden.\n## **8. Gesunder Menschenverstand**\n* Nutze deinen **gesunden Menschenverstand** und respektiere andere.\n* Das Ausnutzen von Regellücken kann dennoch zu Moderationsmaßnahmen führen.\n## **9. Discord-Regeln**\n* Befolge die **[Nutzungsbedingungen von Discord](https://discord.com)** und die **[Community-Richtlinien](https://discord.com)**.\n## **10. Durchsetzung**\n> Regelverstöße können je nach Schweregrad zu einer **Verwarnung, einem Timeout, einem Kick oder einem Bann** führen.\n\n**Durch deinen Verbleib auf diesem Server erklärst du dich mit diesen Regeln einverstanden.**\n\n> 💙 **Vielen Dank, dass du uns hilfst, Astryx sicher und professionell zu halten!**\n",
+                    "text": "## **6. Sicherheit**\n* Nutze keine Exploits aus, greife Astryx nicht an und störe den Bot nicht absichtlich.\n* Teile niemals Malware, Token-Grabber oder Phishing-Links.\n* Melde Sicherheitsprobleme privat an das **Astryx-Team**.\n## **7. Team & Moderation**\n* Befolge angemessene Anweisungen des **Astryx-Teams (Staff)**.\n* Gib dich nicht als Teammitglied aus.\n* Umgehe keine Strafen oder Moderationsmaßnahmen.\n* Konflikte sollten privat mit dem Team geklärt werden.\n## **8. Gesunder Menschenverstand**\n* Nutze deinen **gesunden Menschenverstand** und respektiere andere.\n* Das Ausnutzen von Regellücken kann dennoch zu Moderationsmaßnahmen führen.\n## **9. Discord-Regeln**\n* Befolge die **[ToS von Discord](https://discord.com)** und die **[Community-Richtlinien](https://discord.com)**.\n## **10. Durchsetzung**\n> Regelverstöße können je nach Schweregrad zu einer **Verwarnung, einem Timeout, einem Kick oder einem Bann** führen.\n\n**Durch deinen Verbleib auf diesem Server erklärst du dich mit diesen Regeln einverstanden.**\n\n> 💙 **Vielen Dank, dass du uns hilfst, Astryx sicher und professionell zu halten!**\n",
                     "mode": "ephemeral"
                   }
                 ]
