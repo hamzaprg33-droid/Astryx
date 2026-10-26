@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-26T08:20:09.138Z",
+  "updated_at": "2026-10-26T08:22:17.203Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -96,7 +96,26 @@
             "fields": []
           }
         ],
-        "components": []
+        "components": [
+          {
+            "id": "2l2u2a11",
+            "type": "buttons",
+            "items": [
+              {
+                "id": "054r1926",
+                "label": "🇩🇪 Deutsch",
+                "style": "primary",
+                "actions": [
+                  {
+                    "type": "message",
+                    "text": "Astryx Bot | Alpha v0.74.0 - Message Automation Update\nPing: <@&1556904223663202304>\n## ASTRYX BOT - UPDATE ALPHA v0.74.0\n## Message Automation - Geplante Nachrichten & Webhook Support\n==================================================\n### ZUSAMMENFASSUNG\n--------------------------------------------------\nDu kannst jetzt Nachrichten und Embed-Nachrichten über Automationen senden.\nNachrichten können so eingestellt werden, dass sie wiederholt zwischen 1 Stunde\nund bis zu +30 Tagen gesendet werden. Webhook-Unterstützung ist vollständig enthalten.\n### NEUE FEATURES\n--------------------------------------------------\n**__Geplante Nachrichten über Automation__**\n  - Sende normale Nachrichten und Embed-Nachrichten über Automationen.\n  - Stelle ein wiederholendes Intervall von 1 Stunde bis zu +30 Tagen ein.\n  - Funktioniert vollständig mit ausgewählten Webhooks.\n--------------------------------------------------\nAstryx Bot | Alpha v0.74.0 - Message Automation Update\nPing: <@&1556904223663202304>",
+                    "mode": "ephemeral"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
         "id": "2v453f1a",
