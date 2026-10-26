@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-23T08:55:19.196Z",
+  "updated_at": "2026-10-26T08:20:09.138Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -83,13 +83,13 @@
       {
         "id": "7107171i",
         "name": "update",
-        "content": "Astryx Bot | Alpha v0.73.14 - Message Module Update\nPing: <@&1556904223663202304>",
+        "content": "Astryx Bot | Alpha v0.74.0 - Message Automation Update\nPing: <@&1556904223663202304>",
         "embeds": [
           {
             "color": "#AA2ECC",
             "author": "",
             "title": "",
-            "description": "## ASTRYX BOT - UPDATE ALPHA v0.73.14\n## Message Module - Edit Messages & Dashboard Improvements\n==================================================\n\n### SUMMARY\n--------------------------------------------------\nThe Message Module has been improved! You can now edit\nmessages directly using their message link. Additionally,\nbug fixes and dashboard visual improvements have been\nimplemented.\n\n### NEW FEATURES\n--------------------------------------------------\n**__Edit Messages__**\n  - Edit existing messages directly via their message link.\n  - Webhook messages are excluded from this feature.\n\n### IMPROVEMENTS\n--------------------------------------------------\n**__Bug Fixes__**\n  - Fixed various bugs to improve stability.\n\n**__Dashboard Improvements__**\n  - Improved the dashboard's visual appearance.\n\n--------------------------------------------------\nAstryx Bot | Alpha v0.73.14 - Message Module Update\nPing: <@&1556904223663202304>",
+            "description": "## ASTRYX BOT - UPDATE ALPHA v0.74.0\n## Message Automation - Scheduled Messages & Webhook Support\n==================================================\n### SUMMARY\n--------------------------------------------------\nYou can now send messages and embed messages via Automations.\nMessages can be scheduled to be sent repeatedly between 1 hour\nand up to +30 days. Webhook support is fully included.\n### NEW FEATURES\n--------------------------------------------------\n**__Scheduled Messages via Automation__**\n  - Send normal messages and embed messages through Automations.\n  - Set a repeating interval from 1 hour up to +30 days.\n  - Fully works with selected webhooks.\n--------------------------------------------------\nAstryx Bot | Alpha v0.74.0 - Message Automation Update\nPing: <@&1556904223663202304>",
             "thumbnail": "",
             "image": "",
             "footer": "",
