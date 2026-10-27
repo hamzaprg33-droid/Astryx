@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-27T10:36:15.752Z",
+  "updated_at": "2026-10-27T10:36:38.284Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -147,7 +147,7 @@
             "items": [
               {
                 "id": "4v3c1a2o",
-                "label": "Deutsch",
+                "label": "🇩🇪 Deutsch",
                 "style": "primary",
                 "actions": [
                   {
