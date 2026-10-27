@@ -1,7 +1,7 @@
 {
   "guild_id": "1482635894849536010",
   "server_name": "🔥 Magdeburg RP 🔊",
-  "updated_at": "2026-10-19T17:54:17.505Z",
+  "updated_at": "2026-10-27T22:06:28.258Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1482816566394617869",
@@ -39,6 +39,24 @@
             "thumbnail": "",
             "image": "",
             "footer": "Powered by Astryx",
+            "fields": []
+          }
+        ],
+        "components": []
+      },
+      {
+        "id": "5h203023",
+        "name": "aktivitätscheck",
+        "content": "<@&1482662344650784788>",
+        "embeds": [
+          {
+            "color": "#2ECC4E",
+            "author": "",
+            "title": "AKTIVITÄTSCHECK – Magdeburg RP",
+            "description": "\nHallo Team,\n\ndies ist der offizielle Aktivitätscheck für alle Moderatoren.\n\nBitte reagiert innerhalb von 8 Stunden mit ✅ auf diese Nachricht.\n\nRegelung\nWer innerhalb der 8 Stunden nicht mit ✅ reagiert, erhält eine Verwarnung.\n\nPing\n<@&1482662344650784788>\n\nZusatzinfos\n• Servermitgliederzahl: {members}\n• Reaktion gilt als Bestätigung der Verfügbarkeit\n• Bei Problemen / Krankheit bitte vorher abmelden!\n\nVielen Dank für eure Zuverlässigkeit.\nMagdeburg RP – Leitung",
+            "thumbnail": "",
+            "image": "",
+            "footer": "",
             "fields": []
           }
         ],
