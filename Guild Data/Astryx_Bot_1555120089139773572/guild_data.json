@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-27T10:35:27.522Z",
+  "updated_at": "2026-10-27T10:36:15.752Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -140,7 +140,26 @@
             "fields": []
           }
         ],
-        "components": []
+        "components": [
+          {
+            "id": "1f3p655c",
+            "type": "buttons",
+            "items": [
+              {
+                "id": "4v3c1a2o",
+                "label": "Deutsch",
+                "style": "primary",
+                "actions": [
+                  {
+                    "type": "message",
+                    "text": "Astryx bot - Partnervorteile\n\nAls Partner von Astryx Bot genießt du eine Reihe klarer und wertvoller Vorteile, die deinen Server spürbar voranbringen.\n\nDeine Werbung wird alle 24 Stunden automatisch auf jedem Server ausgespielt, auf dem der Astryx Bot aktiv ist. Sie erscheint in einem vom jeweiligen Serverinhaber oder Admin ausgewählten Channel. So erreichst du regelmäßig und ohne eigenen Aufwand eine große, bereits aktive Community und baust nachhaltige Sichtbarkeit für deinen Server auf.\n\nZusätzlich wird deine Server-Werbung dauerhaft im offiziellen Partnerchannel des Astryx Bot Servers angezeigt. Dadurch bist du nicht nur dezentral auf vielen Servern präsent, sondern auch zentral im Herzstück der Astryx-Community sichtbar.\n\nPartner-Server mit mehr als 50 Mitgliedern erhalten Zugang zum Astryx Beta Bot. Damit hast du frühzeitigen Zugriff auf alle neuen Funktionen und Features, die noch nicht öffentlich freigeschaltet sind. Der Beta Bot steht ausschließlich auf dem Partner-Server zur Verfügung und kann nicht auf weiteren Servern des Inhabers genutzt werden.\n\nDarüber hinaus darfst du als Partner deine Event-Links in den öffentlichen Kanälen des Astryx Bot Servers posten. So kannst du Giveaways, Community-Events, Turniere und weitere Aktionen direkt einer großen und interessierten Zielgruppe vorstellen und deine Community aktiv wachsen lassen.\n\nDiese Vorteile bieten dir automatisierte Reichweite, zentrale Sichtbarkeit, exklusiven Beta-Zugang und direkte Event-Promotion – und unterstützen dich dabei, deinen Server nachhaltig bekannter und attraktiver zu machen.",
+                    "mode": "ephemeral"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }
