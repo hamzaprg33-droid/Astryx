@@ -7,7 +7,8 @@
     kids.forEach(k => e.append(k));
     return e;
   };
-  const ME = window.ME || fetch('/api/me').then(r => (r.ok ? r.json() : null)).catch(() => null);
+  // window.ME kommt aus app.js und ist bereits der User-Objekt (oder null) – NICHT die volle /api/me Antwort
+  const ME = window.ME || fetch('/api/me').then(r => (r.ok ? r.json() : null)).then(d => (d && d.user) || null).catch(() => null);
 
   const [uid, gid] = location.pathname.split('/').filter(Boolean);
   document.getElementById('back').href = `/${uid}/guilds`;
@@ -65,11 +66,14 @@
 
   // ---------- 2) Login-Prüfung und Serverdaten GLEICHZEITIG ----------
   const guildP = fetch(`/api/guild?uid=${uid}&gid=${gid}`, { cache: 'no-store' }).catch(() => null);
-  const meRes = await ME;
-  const me = meRes && meRes.user;
-  hasBeta = !!(meRes && meRes.beta);
+  // Beta separat laden (window.ME liefert nur den User)
+  const betaP = fetch('/api/me', { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(d => !!(d && d.beta)).catch(() => false);
+
+  const me = await ME;
   if (!me) return location.replace('/verify');
   if (me.id !== uid) return location.replace(`/${me.id}/guilds`);
+
+  hasBeta = await betaP;
 
   // Beta-Status bekannt → Karten mit beta-Tag neu zeichnen
   if (hasBeta) {
