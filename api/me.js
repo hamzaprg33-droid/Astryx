@@ -4,11 +4,16 @@ const MAIN_GUILD = process.env.BETA_MAIN_GUILD || '1565293644171186227';
 const BETA_ROLE = process.env.BETA_ROLE_ID || '1564767142136516689';
 
 const betaCache = new Map();
-const BETA_TTL = 5 * 60 * 1000;
+// Positiv länger cachen, negativ nur kurz – sonst bleibt „keine Rolle“ hängen
+const BETA_TTL_YES = 2 * 60 * 1000;  // 2 Min
+const BETA_TTL_NO  = 20 * 1000;      // 20 Sek
 
 async function hasBeta(userId) {
   const hit = betaCache.get(userId);
-  if (hit && Date.now() - hit.at < BETA_TTL) return hit.has;
+  if (hit) {
+    const ttl = hit.has ? BETA_TTL_YES : BETA_TTL_NO;
+    if (Date.now() - hit.at < ttl) return hit.has;
+  }
   try {
     const token = process.env.DISCORD_BOT_TOKEN;
     if (!token) return false;
