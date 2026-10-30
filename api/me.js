@@ -4,9 +4,8 @@ const MAIN_GUILD = process.env.BETA_MAIN_GUILD || '1565293644171186227';
 const BETA_ROLE = process.env.BETA_ROLE_ID || '1564767142136516689';
 
 const betaCache = new Map();
-// Positiv länger cachen, negativ nur kurz – sonst bleibt „keine Rolle“ hängen
-const BETA_TTL_YES = 2 * 60 * 1000;  // 2 Min
-const BETA_TTL_NO  = 20 * 1000;      // 20 Sek
+const BETA_TTL_YES = 60 * 1000;  // 1 Min
+const BETA_TTL_NO  = 15 * 1000;  // 15 Sek
 
 async function hasBeta(userId) {
   const hit = betaCache.get(userId);
@@ -16,23 +15,27 @@ async function hasBeta(userId) {
   }
   try {
     const token = process.env.DISCORD_BOT_TOKEN;
-    if (!token) return false;
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 1500);
-    const r = await fetch(`https://discord.com/api/v10/guilds/${MAIN_GUILD}/members/${userId}`, {
-      headers: { Authorization: `Bot ${token}` },
-      signal: ctrl.signal,
-    });
-    clearTimeout(t);
+    if (!token) {
+      console.error('me/beta: DISCORD_BOT_TOKEN fehlt');
+      return false;
+    }
+    const r = await fetch(
+      `https://discord.com/api/v10/guilds/${MAIN_GUILD}/members/${userId}`,
+      { headers: { Authorization: `Bot ${token}` } }
+    );
     if (!r.ok) {
+      // 404 = nicht auf dem Main-Server
+      console.error('me/beta: Discord', r.status, 'user', userId);
       betaCache.set(userId, { at: Date.now(), has: false });
       return false;
     }
     const m = await r.json();
-    const has = Array.isArray(m.roles) && m.roles.includes(BETA_ROLE);
+    const roles = Array.isArray(m.roles) ? m.roles.map(String) : [];
+    const has = roles.includes(String(BETA_ROLE));
     betaCache.set(userId, { at: Date.now(), has });
     return has;
-  } catch {
+  } catch (e) {
+    console.error('me/beta: Fehler', e && e.message);
     return false;
   }
 }
@@ -45,10 +48,7 @@ module.exports = async (req, res) => {
   const user = { id: s.id, name: s.name, avatar: s.avatar };
   let beta = false;
   try {
-    beta = await Promise.race([
-      hasBeta(s.id),
-      new Promise((resolve) => setTimeout(() => resolve(false), 1500)),
-    ]);
+    beta = await hasBeta(s.id);
   } catch {
     beta = false;
   }
