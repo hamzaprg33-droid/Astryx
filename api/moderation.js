@@ -2,6 +2,20 @@ const { guildAccess } = require('./_lib/access');
 const { bot } = require('./_lib/discord');
 const { readGuild, updateGuild } = require('./_lib/guilddata');
 
+const MAIN_GUILD = process.env.BETA_MAIN_GUILD || '1565293644171186227';
+const BETA_ROLE = process.env.BETA_ROLE_ID || '1564767142136516689';
+
+async function userHasBeta(userId) {
+  try {
+    const r = await bot(`/guilds/${MAIN_GUILD}/members/${userId}`);
+    if (!r.ok) return false;
+    const m = await r.json();
+    return Array.isArray(m.roles) && m.roles.includes(BETA_ROLE);
+  } catch {
+    return false;
+  }
+}
+
 const REASON = new Set(['required', 'optional', 'none']);
 const WHO = new Set(['standard', 'team', 'leadership', 'high']);
 const WHO2 = new Set(['standard', 'team', 'leadership', 'high']);
@@ -121,6 +135,11 @@ async function registerGuildCommands(gid, cfg) {
 module.exports = async (req, res) => {
   const a = await guildAccess(req, res);
   if (!a) return;
+
+  // Nur Beta-Tester (Rolle auf dem Main-Server)
+  if (!(await userHasBeta(a.s.id))) {
+    return res.status(403).json({ error: 'beta_only' });
+  }
 
   try {
     if (req.method === 'GET') {
