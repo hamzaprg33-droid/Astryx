@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-30T11:45:06.392Z",
+  "updated_at": "2026-10-30T11:45:24.922Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -141,7 +141,7 @@
         "content": "",
         "embeds": [
           {
-            "color": "#CCA22E",
+            "color": "#AA2ECC",
             "author": "",
             "title": "Astryx Bot - Partner advantages",
             "description": "As a partner of Astryx Bot, you benefit from a clear set of valuable advantages that meaningfully support the growth of your server.\n\nYour advertisement is automatically posted every 24 hours on every server where the Astryx Bot is active. It appears in a channel selected by the respective server owner or admin. This allows you to consistently reach a large, already engaged audience without any ongoing effort on your part and to build lasting visibility for your server.\n\nIn addition, your server advertisement is permanently displayed in the official partner channel on the Astryx Bot server. This ensures you are not only present across many servers, but also centrally visible within the heart of the Astryx community.\n\nPartner servers with more than 50 members receive access to the Astryx Beta Bot. This grants you early access to all new features and functions that have not yet been publicly released. The Beta Bot is exclusively available on the partner server and cannot be used on any other servers owned by the partner.\n\nFurthermore, as a partner you are allowed to post your event links in the public channels of the Astryx Bot server. This enables you to promote giveaways, community events, tournaments, and other activities directly to a large and interested audience, helping your community grow actively.\n\nThese advantages provide you with automated reach, central visibility, exclusive beta access, and direct event promotion – supporting you in making your server more known and attractive over the long term.",
