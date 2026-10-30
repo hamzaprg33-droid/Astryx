@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-30T11:45:24.922Z",
+  "updated_at": "2026-10-30T11:45:54.312Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -123,7 +123,7 @@
         "content": "",
         "embeds": [
           {
-            "color": "#2ECC71",
+            "color": "#AA2ECC",
             "author": "",
             "title": "",
             "description": "## ASTRYX BOT - SNEAK PEEK ALPHA v0.73.15\n## Moderation Module - Staff Management & Moderation\n==================================================\n\n### SUMMARY\n--------------------------------------------------\nA new Moderation Module is coming to Astryx Bot!\n\nManage your server's moderation more efficiently with\nnew moderation commands, customizable staff roles, and\nindividual configuration options.\n\n### UPCOMING FEATURES\n--------------------------------------------------\n**__Moderation Commands__**\n  - /warn - Warn server members.\n  - /kick - Remove members from your server.\n  - /ban - Ban members from your server.\n\n**__Staff & Management Roles__**\n  - Configure different staff roles.\n  - Create management and leadership roles.\n  - Assign individual permissions and responsibilities.\n\n**__Full Customization__**\n  - Configure all available settings to fit your server.\n  - Customize roles, permissions, and moderation options.\n  - Adapt the system to your community's needs.\n\n--------------------------------------------------\nAstryx Bot | Alpha v0.73.15 - Moderation Module\nPing: <@&1556904219460763658> <@&1556904219615690782>",
