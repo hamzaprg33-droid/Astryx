@@ -7,7 +7,6 @@
     kids.forEach(k => e.append(k));
     return e;
   };
-  // window.ME kommt aus app.js und ist bereits der User-Objekt (oder null)
   const ME = window.ME || fetch('/api/me').then(r => (r.ok ? r.json() : null)).then(d => (d && d.user) || null).catch(() => null);
 
   const [uid, gid] = location.pathname.split('/').filter(Boolean);
@@ -17,11 +16,8 @@
   const content = document.getElementById('content');
 
   const links = [];
-  let hasBeta = false;
-
   const card = (c) => {
-    const isBetaOnly = c.tags.includes('beta');
-    const open = c.active && !c.tags.includes('build') && (!isBetaOnly || hasBeta);
+    const open = c.active && !c.tags.includes('build');
     const el = make('div', { className: 'cat' + (open ? ' on' : ' off') });
     if (!open) el.setAttribute('aria-disabled', 'true');
 
@@ -49,36 +45,22 @@
   head.append(make('div', { className: 'dash-head' },
     make('div', { className: 'icon sk' }),
     make('div', {}, make('div', { className: 'sk-line', style: 'width:200px' }), make('div', { className: 'sk-line', style: 'width:120px;margin-top:10px' }))));
-  const catsEl = [];
   F.sections.forEach(s => {
     content.append(make('div', { className: 'sec-title', textContent: F.pick(s.title) }));
-    const row = make('div', { className: 'cats' }, ...s.cats.map(card));
-    catsEl.push({ section: s, row });
-    content.append(row);
+    content.append(make('div', { className: 'cats' }, ...s.cats.map(card)));
   });
   content.append(make('div', { className: 'sec-title', textContent: F.ui.legend }));
   content.append(make('div', { className: 'legend' }, ...Object.keys(F.tagDefs).map(k =>
     make('div', { className: 'legend-row' }, F.tag(k), make('span', { textContent: F.pick(F.tagDefs[k].desc) })))));
 
-  const guildP = fetch(`/api/guild?uid=${uid}&gid=${gid}`, { cache: 'no-store' }).catch(() => null);
-  const betaP = fetch('/api/me', { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(d => !!(d && d.beta)).catch(() => false);
-
-  const me = await ME;
-  if (!me) return location.replace('/verify');
-  if (me.id !== uid) return location.replace(`/${me.id}/guilds`);
-
-  hasBeta = await betaP;
-
-  if (hasBeta) {
-    links.length = 0;
-    catsEl.forEach(({ section, row }) => {
-      row.replaceChildren(...section.cats.map(card));
-    });
-  }
-
   links.forEach(({ a, page }) =>
     fetch(`/${uid}/${gid}/${page}`, { method: 'HEAD', cache: 'no-store' })
       .then(r => { if (r.ok) a.href = `/${uid}/${gid}/${page}`; }).catch(() => {}));
+
+  const guildP = fetch(`/api/guild?uid=${uid}&gid=${gid}`, { cache: 'no-store' }).catch(() => null);
+  const me = await ME;
+  if (!me) return location.replace('/verify');
+  if (me.id !== uid) return location.replace(`/${me.id}/guilds`);
 
   const stop = (text) => { head.replaceChildren(); content.replaceChildren(); msg.textContent = text; };
   const r = await guildP;
