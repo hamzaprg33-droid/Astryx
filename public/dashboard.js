@@ -7,7 +7,7 @@
     kids.forEach(k => e.append(k));
     return e;
   };
-  // window.ME kommt aus app.js und ist bereits der User-Objekt (oder null) – NICHT die volle /api/me Antwort
+  // window.ME kommt aus app.js und ist bereits der User-Objekt (oder null)
   const ME = window.ME || fetch('/api/me').then(r => (r.ok ? r.json() : null)).then(d => (d && d.user) || null).catch(() => null);
 
   const [uid, gid] = location.pathname.split('/').filter(Boolean);
@@ -16,12 +16,10 @@
   const head = document.getElementById('head');
   const content = document.getElementById('content');
 
-  // Link-Ziele: der sichere Weg zuerst; die kurze Adresse wird nachträglich eingesetzt, wenn der Server sie kennt
   const links = [];
   let hasBeta = false;
 
   const card = (c) => {
-    // Beta-Module sind für Normalnutzer "Bald verfügbar" + BETA-Tag, für Beta-Nutzer voll nutzbar
     const isBetaOnly = c.tags.includes('beta');
     const open = c.active && !c.tags.includes('build') && (!isBetaOnly || hasBeta);
     const el = make('div', { className: 'cat' + (open ? ' on' : ' off') });
@@ -48,8 +46,6 @@
     return el;
   };
 
-  // ---------- 1) SOFORT anzeigen: die Kategorien hängen nicht von Serverdaten ab ----------
-  // (Beta-Status kommt gleich, Karten werden bei Bedarf neu gezeichnet)
   head.append(make('div', { className: 'dash-head' },
     make('div', { className: 'icon sk' }),
     make('div', {}, make('div', { className: 'sk-line', style: 'width:200px' }), make('div', { className: 'sk-line', style: 'width:120px;margin-top:10px' }))));
@@ -64,9 +60,7 @@
   content.append(make('div', { className: 'legend' }, ...Object.keys(F.tagDefs).map(k =>
     make('div', { className: 'legend-row' }, F.tag(k), make('span', { textContent: F.pick(F.tagDefs[k].desc) })))));
 
-  // ---------- 2) Login-Prüfung und Serverdaten GLEICHZEITIG ----------
   const guildP = fetch(`/api/guild?uid=${uid}&gid=${gid}`, { cache: 'no-store' }).catch(() => null);
-  // Beta separat laden (window.ME liefert nur den User)
   const betaP = fetch('/api/me', { cache: 'no-store' }).then(r => (r.ok ? r.json() : null)).then(d => !!(d && d.beta)).catch(() => false);
 
   const me = await ME;
@@ -75,7 +69,6 @@
 
   hasBeta = await betaP;
 
-  // Beta-Status bekannt → Karten mit beta-Tag neu zeichnen
   if (hasBeta) {
     links.length = 0;
     catsEl.forEach(({ section, row }) => {
@@ -83,7 +76,6 @@
     });
   }
 
-  // Kurze Adressen im Hintergrund prüfen und dann einsetzen
   links.forEach(({ a, page }) =>
     fetch(`/${uid}/${gid}/${page}`, { method: 'HEAD', cache: 'no-store' })
       .then(r => { if (r.ok) a.href = `/${uid}/${gid}/${page}`; }).catch(() => {}));
