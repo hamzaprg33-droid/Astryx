@@ -1,7 +1,7 @@
 {
   "guild_id": "1482635894849536010",
   "server_name": "🔥 Magdeburg RP 🔊",
-  "updated_at": "2026-10-30T09:11:48.432Z",
+  "updated_at": "2026-10-30T09:13:01.944Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1482816566394617869",
@@ -20,7 +20,7 @@
       "1508362721148539051",
       "1482661818445987883"
     ],
-    "timer": 5,
+    "timer": 1,
     "applyToBots": false,
     "botRole": "1482661818186076212"
   },
