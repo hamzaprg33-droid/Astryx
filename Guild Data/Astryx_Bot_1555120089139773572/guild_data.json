@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-31T10:33:07.990Z",
+  "updated_at": "2026-10-31T11:23:10.439Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -194,11 +194,23 @@
     ]
   },
   "moderation": {
-    "enabled": false,
-    "teamRoles": [],
-    "leadershipRoles": [],
+    "enabled": true,
+    "teamRoles": [
+      "1556904220844883989",
+      "1556904220509339670",
+      "1556904220106432532",
+      "1556904219808899104",
+      "1556904221524361306",
+      "1556904218621780089",
+      "1556904218143621150",
+      "1556904203480334376"
+    ],
+    "leadershipRoles": [
+      "1556904203480334376",
+      "1556904218143621150"
+    ],
     "dashboardRoles": [],
-    "standardTeamRole": "",
+    "standardTeamRole": "1563468203798040576",
     "commands": {
       "warn": {
         "enabled": false,
