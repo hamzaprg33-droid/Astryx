@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-31T11:23:57.103Z",
+  "updated_at": "2026-10-31T13:29:58.089Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -215,21 +215,20 @@
     "standardTeamRole": "1563468203798040576",
     "commands": {
       "warn": {
-        "enabled": false,
+        "enabled": true,
         "reason": "optional",
         "who": [
-          "team",
-          "leadership"
+          "standard"
         ],
         "messages": [
           {
             "type": "dm",
             "textEnabled": true,
-            "text": "You got warned!",
-            "embedEnabled": false,
+            "text": "@user",
+            "embedEnabled": true,
             "embed": {
-              "title": "",
-              "description": "",
+              "title": "⚠️ Warning Received",
+              "description": "You have been warned.\n\nReason: {reason}\nWarning Number: <warn_number>\nModerator: {moderator}\nExpires: <expire>",
               "color": "#E74C3C"
             }
           }
