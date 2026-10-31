@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-31T13:31:56.049Z",
+  "updated_at": "2026-10-31T14:57:00.373Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -17,7 +17,9 @@
   "joinroles": {
     "enabled": true,
     "roles": [
-      "1556904223663202304"
+      "1556904223663202304",
+      "1563108237153411163",
+      "1563108361539682365"
     ],
     "timer": 1,
     "applyToBots": false,
