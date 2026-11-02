@@ -1,7 +1,7 @@
 {
   "guild_id": "1482635894849536010",
   "server_name": "Magdeburg RP",
-  "updated_at": "2026-11-02T21:00:33.185Z",
+  "updated_at": "2026-11-02T21:17:13.960Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1566902113181765792",
@@ -107,6 +107,44 @@
             "author": "",
             "title": "OOC Rechte",
             "description": "**§32 - Admin-Anforderung**  \nSobald ein Spieler einen Admin anfordert, muss dies sofort und uneingeschränkt befolgt werden. Es ist Pflicht, einen Admin zu rufen und vollständig zu kooperieren – unabhängig von der aktuellen Situation. Das gilt auch dann, wenn der Spieler bewusstlos ist, Klebeband am Mund hat, gefesselt ist oder sich in irgendeiner anderen Lage befindet. Jegliche Verzögerung, Verweigerung oder Behinderung der Admin-Anforderung ist untersagt und wird sanktioniert.\n\n**§33 - Missbrauch von Admin-Calls**  \nAdmin-Calls dürfen nicht grundlos oder aus Spaß ausgenutzt werden. Es ist untersagt, einen Admin ohne triftigen Grund oder aus reiner Provokation zu rufen. Offensichtliche Missverständnisse werden nicht bestraft, absichtlicher Missbrauch jedoch schon.\n\n**§33 - Permanentes OOC Reden**\nEs ist untersagt permanent oder sinnlos im RP OOC-Talk zu betreiben.\nDas Out-Of-Roleplay Sprechen ist nur in folgenden Situationen erlaubt:\n- Admin Unterhaltung\n- Admin rufen\n- Spieler auf Regelverstoß Hinweisen\n\nNicht erlaubt sind Beispielsweise:\n- Stream Talk\n- Discord Talk + RP teilnahme (Meta Gaming)\n- Unnötige Witze oder Kommentare",
+            "thumbnail": "",
+            "image": "",
+            "footer": "",
+            "fields": []
+          }
+        ],
+        "components": []
+      },
+      {
+        "id": "5x1e2017",
+        "name": "Strafkatalog",
+        "content": "",
+        "embeds": [
+          {
+            "color": "#FFD500",
+            "author": "",
+            "title": "🟢__Einfache Verstöße – 1–2 Verwarnungen__🟢",
+            "description": "💬 Spam / Flooding --> 1 Verwarnung\n📢 Unnötige Mentions --> 1 Verwarnung\n🚗 Unnötiges Rammen --> 1 Verwarnung\n🚦 Unrealistisches Fahrverhalten --> 1 Verwarnung\n🎭 Leichtes Fail RP --> 1 Verwarnung\n🎮 Baiting --> 1 Verwarnung\n📞 Unnötige Admin-Calls --> 1 Verwarnung\n🤝 Respektloses Verhalten --> 1 Verwarnung\n🚑 Verletzungen ignorieren --> 2 Verwarnungen\n💥 Unrealistisches Crash RP --> 2 Verwarnungen\n🎙️ Unnötiger OOC-Talk --> 2 Verwarnungen\n🗣️ RP-Verweigerung --> 2 Verwarnungen",
+            "thumbnail": "",
+            "image": "",
+            "footer": "",
+            "fields": []
+          },
+          {
+            "color": "#FF6600",
+            "author": "",
+            "title": "🟡__Mittlere Verstöße – 3–4 Verwarnungen__🟡",
+            "description": "🔫 Random Deathmatch (RDM) --> 3 Verwarnungen\n🚗 Vehicle Deathmatch (VDM) --> 3 Verwarnungen\n🧠 Metagaming --> 3 Verwarnungen\n⚔️ Power RP / Powergaming --> 3 Verwarnungen\n❤️ Fear RP missachtet --> 3 Verwarnungen\n🔄 New Life Rule missachtet --> 3 Verwarnungen\n🚪 Combat Logging --> 3 Verwarnungen\n🎮 Bug Abusing --> 3 Verwarnungen\n🚨 Schussankündigung missachtet --> 3 Verwarnungen\n🏠 Safezone-Missbrauch --> 3 Verwarnungen\n🛑 Spawn Camping --> 3 Verwarnungen\n🔗 Geiselnahme-Regeln missachtet --> 3 Verwarnungen\n👥 Fraktionsregeln missachtet --> 3 Verwarnungen\n📢 Admin-Anweisung missachtet --> 3 Verwarnungen\n📋 Admin-Call absichtlich behindert --> 3 Verwarnungen\n🔫 Admin RDM --> 3 Verwarnungen\n🚗 Admin VDM --> 3 Verwarnungen\n📺 Wiederholtes OOC-Talking --> 4 Verwarnungen\n🎭 Massives Fail RP --> 4 Verwarnungen\n🚫 Wiederholte RP-Verweigerung --> 4 Verwarnungen\n📣 Unerlaubte Werbung --> 4 Verwarnungen\n👮 Admin-Call-Missbrauch --> 4 Verwarnungen",
+            "thumbnail": "",
+            "image": "",
+            "footer": "",
+            "fields": []
+          },
+          {
+            "color": "#FF0000",
+            "author": "",
+            "title": "🔴__Schwere Verstöße – Bann__🔴",
+            "description": "💀 Admin töten --> 1 Tag Bann\n⚔️ Massives Power RP --> 1 Tag Bann\n🔫 Massives RDM --> 1 Tag Bann\n🚗 Massives VDM --> 1 Tag Bann\n🚪 Wiederholtes Combat Logging --> 1 Tag Bann\n📋 Manipulation von Admin-Calls --> 1 Tag Bann\n💣 Terror RP --> 1 Tag Bann\n📢 Massive Einsatzstörung / gezieltes Trolling --> 3 Tage Bann\n🧨 Bomben RP --> 3 Tage Bann\n🗯️ Massive Hassrede / Diskriminierung --> 3 Tage Bann\n📡 Doxxing-Androhung --> 7 Tage Bann\n🔄 Wiederholte Bannumgehung --> Permanent\n🚨 Server-Raiding --> Permanent\n💥 Server-Sabotage --> Permanent\n🪪 Doxxing --> Permanent\n🔢 Underage (unter 13 Jahren) --> Permanent\n👾 Exploiting / Hacken --> Permanent\n🛠️ Cheats / unerlaubte Tools --> Permanent\n💻 Alternative Clients zum Cheaten --> Permanent\n🔐 Schwerer Accountmissbrauch --> Permanent",
             "thumbnail": "",
             "image": "",
             "footer": "",
