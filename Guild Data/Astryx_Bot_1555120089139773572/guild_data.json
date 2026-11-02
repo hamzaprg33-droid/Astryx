@@ -1,7 +1,7 @@
 {
   "guild_id": "1555120089139773572",
   "server_name": "Astryx Bot 🎃",
-  "updated_at": "2026-10-31T14:57:00.373Z",
+  "updated_at": "2026-11-02T06:38:36.314Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1558733141382795326",
@@ -261,5 +261,28 @@
         "permanent": true
       }
     }
-  }
+  },
+  "moderation_log": [
+    {
+      "id": "mvyw16ojpdji",
+      "type": "warn",
+      "at": "2026-11-02T06:38:35.539Z",
+      "target_id": "1401282172018491463",
+      "target_name": "PRL・Paulo",
+      "moderator_id": "1377375205571301588",
+      "moderator_name": "PRL · Yuna",
+      "reason": "Test",
+      "expire": null,
+      "expire_text": "permanent",
+      "warn_number": 1,
+      "messages": [
+        {
+          "type": "dm",
+          "text": "<@1401282172018491463>",
+          "embed_title": "⚠️ Warning Received",
+          "embed_description": "You have been warned.\n\nReason: Test\nWarning Number: 1\nModerator: PRL · Yuna\nExpires: permanent"
+        }
+      ]
+    }
+  ]
 }
