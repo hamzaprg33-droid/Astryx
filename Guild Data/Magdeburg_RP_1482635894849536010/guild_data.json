@@ -1,7 +1,7 @@
 {
   "guild_id": "1482635894849536010",
   "server_name": "Magdeburg RP",
-  "updated_at": "2026-11-02T20:52:39.028Z",
+  "updated_at": "2026-11-02T21:00:33.185Z",
   "welcomer": {
     "enabled": true,
     "channelId": "1566902113181765792",
@@ -89,6 +89,24 @@
             "author": "",
             "title": "",
             "description": "**§16 - OOC und In-Character**\nBleibe während des Roleplays in Character. OOC-Gespräche gehören in Klammern () oder in die dafür vorgesehenen Kanäle. Unnötiges OOC-Talking im Einsatz oder während RP-Szenen ist untersagt. Der In-Character-Aspekt hat immer Vorrang.\n\n**§17 - Baiting und RP-Verweigerung**\nDas absichtliche Provozieren anderer Spieler (Baiting), um sie zu Regelverstößen zu verleiten, ist verboten. Ebenso ist die aktive Verweigerung von Roleplay untersagt.\n\n**§18 - Bugs, Exploits und Cheats**\nDas Ausnutzen von Bugs, Exploits, Cheats, alternativen Clients oder unerlaubten Tools ist streng verboten und führt in der Regel zu einem permanenten Bann.\n\n**§19 - Spawn Camping und Safezones**\nSpawn Camping ist untersagt. Das Ausnutzen von Spawn-Bereichen oder Safezones zum Töten oder Stören ist verboten (außer es liegt ein klarer RP-Hintergrund vor).\n\n**§20 - Unnötiges Rammen und Fahrzeugverhalten**\nDas unnötige Rammen anderer Fahrzeuge ohne RP-Grund ist verboten. Fahrzeuge müssen realistisch gefahren werden. Extremes Rasen durch Innenstädte ohne Grund oder das Überfahren von Absperrungen ohne RP-Begründung gilt als Fail RP.\n\n**§21 - Leichenschändung**\nDas Durchsuchen, Ausrauben oder Misshandeln von bewusstlosen oder toten Spielern ohne RP-Hintergrund ist untersagt.\n\n**§22 - Geiselnahmen**\nGeiselnahmen müssen realistisch ausgespielt werden. Es dürfen maximal 2–3 Geiselnehmer beteiligt sein (je nach Polizeistärke). Geiseln dürfen nicht aktiv im Einsatz sein (z. B. Sanitäter während eines Einsatzes). Forderungen müssen angemessen bleiben.\n\n**§23 - Realistisches Aussehen und Verhalten**\nAvatare sollten realistisch aussehen. Extrem unrealistische Avatare, die den Spielspaß beeinträchtigen, können beanstandet werden. Das Verhalten muss zur gewählten Rolle passen.\n\n**§24 - Notruf- und Einsatzregeln**\nNotrufe dürfen nur für echte RP-Situationen genutzt werden. Falsche Notrufe oder das absichtliche Stören von Einsätzen sind verboten. Anweisungen von Polizei, Feuerwehr, Rettungsdienst und Einsatzleitern sind im Roleplay bindend.\n\n**§25 - Fraktionen und Gangs**\nFraktionen und Gangs müssen beim Management beantragt werden. Organisierte Gruppierungen dürfen den Server nicht stören oder raiden. Raiding und Sabotage führen zu sofortigen Bans.\n\n**§26 - Kanalnutzung**\nJeder Kanal hat einen bestimmten Zweck. Bitte nutzt die Kanäle entsprechend ihrer Beschreibung. Off-Topic-Inhalte gehören in den dafür vorgesehenen Kanal. Bot-Befehle nur in den dafür vorgesehenen Kanälen.\n\n**§27 - Moderatorentscheidungen**\nDie Entscheidungen der Moderatoren und des Management-Teams sind bindend. Bei Fragen zu Strafen können diese per DM kontaktiert werden. Widerspruch oder Beleidigung der Moderatoren führt zu strengeren Strafen. Staff-Mitglieder haben in Zweifelsfällen das letzte Wort.\n\n**§28 - Strafsystem**\nVerwarnungen werden nach folgendem System vergeben:\n1. Verwarnung – Nutzer wird verwarnt\n2. Mute – Nutzer kann 24 Stunden nicht schreiben\n3. Temporärer Ban – Nutzer wird für einen bestimmten Zeitraum gebannt\n4. Permanenter Ban – Nutzer wird dauerhaft vom Server entfernt\n\n3 Verwarnungen = 1 Mute | 3 Mutes = 1 Temporärer Ban\nSchwere Verstöße (z. B. massives Fail RP, RDM, VDM, Exploits, Combat Logging) können direkt höher geahndet werden. Das Team behält sich das Recht vor, im Einzelfall anders zu entscheiden.\n\n**§29 - Änderungen der Regeln**\nDas Management-Team behält sich das Recht vor, diese Regeln jederzeit zu ändern, zu ergänzen oder anzupassen. Änderungen werden der Community mitgeteilt.\n\n**§30 - Appelle und Kontakt**\nBei unfairer Behandlung oder Fragen zu Strafen könnt ihr das Management-Team per DM kontaktieren. Appelle müssen begründet sein und werden geprüft. Wiederholte Verstöße führen zu schärferen Strafen.\n\n**§31 - Altersangabe**\nDer Server ist ab 13 Jahren freigegeben. Nutzer unter 13 Jahren müssen dies bei der Registrierung angeben. Bei Missachtung kann eine Sperrung erfolgen.",
+            "thumbnail": "",
+            "image": "",
+            "footer": "",
+            "fields": []
+          }
+        ],
+        "components": []
+      },
+      {
+        "id": "733n634z",
+        "name": "ic regelwerk 3",
+        "content": "",
+        "embeds": [
+          {
+            "color": "#CC2E2E",
+            "author": "",
+            "title": "OOC Rechte",
+            "description": "**§32 - Admin-Anforderung**  \nSobald ein Spieler einen Admin anfordert, muss dies sofort und uneingeschränkt befolgt werden. Es ist Pflicht, einen Admin zu rufen und vollständig zu kooperieren – unabhängig von der aktuellen Situation. Das gilt auch dann, wenn der Spieler bewusstlos ist, Klebeband am Mund hat, gefesselt ist oder sich in irgendeiner anderen Lage befindet. Jegliche Verzögerung, Verweigerung oder Behinderung der Admin-Anforderung ist untersagt und wird sanktioniert.\n\n**§33 - Missbrauch von Admin-Calls**  \nAdmin-Calls dürfen nicht grundlos oder aus Spaß ausgenutzt werden. Es ist untersagt, einen Admin ohne triftigen Grund oder aus reiner Provokation zu rufen. Offensichtliche Missverständnisse werden nicht bestraft, absichtlicher Missbrauch jedoch schon.\n\n**§33 - Permanentes OOC Reden**\nEs ist untersagt permanent oder sinnlos im RP OOC-Talk zu betreiben.\nDas Out-Of-Roleplay Sprechen ist nur in folgenden Situationen erlaubt:\n- Admin Unterhaltung\n- Admin rufen\n- Spieler auf Regelverstoß Hinweisen\n\nNicht erlaubt sind Beispielsweise:\n- Stream Talk\n- Discord Talk + RP teilnahme (Meta Gaming)\n- Unnötige Witze oder Kommentare",
             "thumbnail": "",
             "image": "",
             "footer": "",
