@@ -1,0 +1,27 @@
+{
+  "guild_id": "1566502518585036901",
+  "server_name": "Zocker Lounge | Official [DE / ENG]",
+  "updated_at": "2026-11-03T21:14:44.773Z",
+  "messages": {
+    "templates": [
+      {
+        "id": "0p6n0061",
+        "name": "Test",
+        "content": "Das ist ein Test!",
+        "embeds": [
+          {
+            "color": "#2ECC71",
+            "author": "Jemand",
+            "title": "Test",
+            "description": "Das hier ist ein inoffizieller Test",
+            "thumbnail": "https://discord.com/channels/@me/1565110249050865785/1567285518797115484",
+            "image": "https://discord.com/channels/@me/1565110249050865785/1567285518797115484",
+            "footer": "",
+            "fields": []
+          }
+        ],
+        "components": []
+      }
+    ]
+  }
+}
