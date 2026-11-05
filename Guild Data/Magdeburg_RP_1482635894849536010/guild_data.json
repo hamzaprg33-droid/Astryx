@@ -1,9 +1,9 @@
 {
   "guild_id": "1482635894849536010",
   "server_name": "Magdeburg RP",
-  "updated_at": "2026-11-05T05:44:02.344Z",
+  "updated_at": "2026-11-05T05:44:07.066Z",
   "welcomer": {
-    "enabled": false,
+    "enabled": true,
     "channelId": "1566902113181765792",
     "textEnabled": true,
     "text": "@user",
